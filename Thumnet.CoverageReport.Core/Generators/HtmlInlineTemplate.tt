@@ -1,0 +1,24 @@
+﻿<#@ template language="C#" debug="true" #>
+<#@ assembly name="System.Core" #>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coverage Viewer</title>
+</head>
+<body>
+    
+    <script id="lcovSource" type="text/template">
+		<#= LcovSource #>
+	</script>
+
+	<# foreach (var sourceFileName in SourceFiles.Keys) { #>
+		<script id="<#= sourceFileName #>" type="text/template">
+			<#= SourceFiles[sourceFileName] #>
+		</script>
+	<# } #>
+
+</body>
+</html>
