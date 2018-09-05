@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LzString.CSharp.dotnet" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Thumnet.CoverageReport.Core\Thumnet.CoverageReport.Core.csproj" />
   </ItemGroup>
 

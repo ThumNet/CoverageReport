@@ -6,6 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coverage Viewer</title>
+    <style>
+        .code {
+            counter-reset: line;
+            font-family: monospace;
+        }
+        .code p {
+            white-space: pre; 
+            line-height: 1rem;
+            counter-increment: line;
+            margin: 0;     
+            color: #333;       
+        }
+        .code p.notmeasured { color: #999; }
+        .code p.hit { background-color: rgba(131, 255, 131, 0.3); }
+        .code p.nothit { background-color: rgba(255, 131, 131, 0.3); }
+
+        .code p:hover {
+            background-color: #efefef;
+            cursor: default;
+        }
+        .code p.hit:hover { background-color: rgba(131, 255, 131, 0.5); }
+        .code p.nothit:hover { background-color: rgba(255, 131, 131, 0.5); }
+
+        .code p::before {
+            content: counter(line) ".";
+            display: inline-block;
+            text-align: right;
+            width: 2em;
+            padding-right: .5em;
+            margin-right: .5em;
+            color: #aaa;
+            border-right: 2px solid #999;
+            background-color: #efefef;
+        }
+
+        .code p.hit::before { border-right-color: green; }
+        .code p.nothit::before { border-right-color: red; }
+
+        .code p:hover::before {
+            background-color: #ececec;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -88,84 +131,16 @@
     </script>
 
     <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\ClassLibrary1\Class1.cs" type="text/template">
-        using System;
-
-        namespace ClassLibrary1
-        {
-        public class Class1
-        {
-        public string MyProperty { get; set; }
-
-        public void Do()
-        {
-        if (string.IsNullOrEmpty(MyProperty))
-        {
-        MyProperty = "Empty";
-        }
-        }
-        }
-        }
-
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠᭢₠٬f½ڐ䁦Ḡ潜ᣂルϗ匩⌲凓ᴥဣ㣤挫⽶ᅊ♬੮䣐ƄࠠᕘϹ䫄癠䇆੊㉬Ϗ渢紐䞍෶䫨ü嚀3ఠѪ怡․创絕缞〠᦬ᙐ沀πɨ䀠狠窚\厠੎䍀㫥䵌㚖ޘ扶啌⊹浬㝺渍ภ常1ێ傪᧠甔綇欓䗜㳰  
     </script>
-    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs" type="text/template">
-        using System;
-        using System.Collections.Generic;
-        using System.Text;
-
-        namespace CoverageTest.App
-        {
-        public class Calculator
-        {
-        public int Add(int number1, int number2)
-        {
-        return number1 + number2;
-        }
-
-        public int Devide(int number1, int number2)
-        {
-        if (number1 == 0)
-        {
-        throw new ArgumentException("Devide by zero", nameof(number1));
-        }
-
-        return number2 == 1 ? number1 : number1 / number2;
-        }
-        }
-        }
-
+        <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs" type="text/template">
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡ״嵯☦筂⢙皮㭼⎬⧵漏↤䍀懬F㒠Ւ☢మ䆕瀢ᠠ㑩࠴幡㞠ӠӀ䛤惂䵭Ṵ㉐ޢி䱉焴怡哝檾඀嗆+珤㛧᳼ṙ1⨾䰭᪭䣍ဖ䯫ᖝ媦璋◊㤆#ᣢ㋋筐~Ꮼ!䪙㲯䶜ᶰ6ṅ'㬅⡰㳣慡祎ᤠʨ擺㪩䆂㈠ᄺ懒沀ᜢ̠Ý㱪ശ⭉⩪ᬏ㬼͚仉ᬝ㍼ࠊ毕ᶎ例⭝⽡䀯愄ِ+俬ఠ窞⊌摙ಸ冸攠 
     </script>
-    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs" type="text/template">
-        using System;
-
-        namespace CoverageTest.App
-        {
-        class Program
-        {
-        static void Main(string[] args)
-        {
-        Console.WriteLine("Hello World!");
-        }
-        }
-        }
-
+        <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs" type="text/template">
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠笠滈ʔᕊu❀ຠ₹ᥜþ㱐ኂ⠡娱ģ!⋾䨻㪑䦃㥆瓡⑌䘲䙃㵐Fᠡ㊥ဠ⡰婢䀭倫冨⋪Р╆佦හਨだ䈉勈帠㫓䴠͉է堡ࠠወ榉㴬ᙞ䋭აȱ匜㡚傠⿀☶宠樠 
     </script>
-    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs" type="text/template">
-        using System;
-        using System.Collections.Generic;
-        using System.Text;
-
-        namespace CoverageTest.App
-        {
-        public class SubjectOf
-        <T>
-            {
-            public string NameOf()
-            {
-            return typeof(T).Name;
-            }
-            }
-            }
-
+        <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs" type="text/template">
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡު瀥ゆ‣搠映ṩ?ự枋䒒╚巽瑐ᑞࢠ๥⪮ࠠ倢⤃䥐Ӓ奯ᔹణ悡䍀ᇵ⢴ア撱㒷᫈ᓉ䀢絫Θ⇼ဠ 
     </script>
 
     <script id="mainTemplate" type="text/template">
@@ -198,6 +173,11 @@
         <h1>File report</h1>
         <p>File: <%- model.item.shortFile %></p>
         <p><a href="#">Back</a></p>
+        <div class="code">
+            <% _.each(model.source.split('\n'), function(line, index) { %>
+                <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
+            <% }); %>
+        </div>
         <pre><%- model.source %></pre>
     </script>
 
@@ -333,6 +313,7 @@
 
     </script>
 
+    <script src="http://pieroxy.net//lzstring/lz-string-1.4.4.js"></script>
     <script src="https://underscorejs.org/underscore-min.js"></script>
 
     <script>
@@ -366,11 +347,20 @@
             }
         }
 
+        function getLineClass(lcovItem, lineNumber) {
+            var line = _.find(lcovItem.lines.details, i => i.line == lineNumber);
+            var func = _.find(lcovItem.functions.details, i => i.line == lineNumber);
+            var subject = line || func;
+            return subject == null ? 'notmeasured' : subject.hit === 1 ? 'hit' : 'nothit';
+        }
+
         function showFile(filePath) {
             if (!tCoverage.lcovData) { return; }
 
             var item = _.find(tCoverage.items, i => i.file == filePath);
-            var source = document.getElementById(filePath).textContent.trim();
+            console.log(item);
+            var sourceCompressed = document.getElementById(filePath).textContent.trim();
+            var source = LZString144.decompressFromUTF16(sourceCompressed);
             loadTemplate(fileTemplate, { item, source });
         }
 
@@ -399,6 +389,7 @@
                     found += data[i].lines.found;
                     items.push({
                         file: data[i].file,
+                        lcov: data[i],
                         shortFile: data[i].file.replace(tCoverage.longestPath, ''),
                         line: (data[i].lines.hit / data[i].lines.found) * 100,
                         branch: (data[i].branches.hit / data[i].branches.found) * 100,
