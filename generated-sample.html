@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coverage Viewer</title>
+</head>
+
+<body>
+
+    <div id="main"></div>
+
+    <script id="lcovSource" type="text/template">
+        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\ClassLibrary1\Class1.cs
+        FN:6,System.String ClassLibrary1.Class1::get_MyProperty()
+        FNDA:0,System.String ClassLibrary1.Class1::get_MyProperty()
+        DA:7,0
+        FN:9,System.Void ClassLibrary1.Class1::Do()
+        FNDA:0,System.Void ClassLibrary1.Class1::Do()
+        DA:10,0
+        DA:11,0
+        DA:12,0
+        DA:13,0
+        DA:14,0
+        DA:15,0
+        BRDA:11,14,0,0
+        BRDA:11,14,1,0
+        LF:7
+        LH:0
+        BRF:2
+        BRH:0
+        FNF:2
+        FNH:0
+        end_of_record
+        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs
+        FN:9,System.Int32 CoverageTest.App.Calculator::Add(System.Int32,System.Int32)
+        FNDA:1,System.Int32 CoverageTest.App.Calculator::Add(System.Int32,System.Int32)
+        DA:10,1
+        DA:11,1
+        DA:12,1
+        FN:14,System.Int32 CoverageTest.App.Calculator::Devide(System.Int32,System.Int32)
+        FNDA:1,System.Int32 CoverageTest.App.Calculator::Devide(System.Int32,System.Int32)
+        DA:15,1
+        DA:16,1
+        DA:17,0
+        DA:18,0
+        DA:21,1
+        DA:22,1
+        BRDA:16,7,0,0
+        BRDA:16,7,1,1
+        BRDA:21,28,0,0
+        BRDA:21,28,1,1
+        LF:9
+        LH:7
+        BRF:4
+        BRH:2
+        FNF:2
+        FNH:2
+        end_of_record
+        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs
+        FN:7,System.Void CoverageTest.App.Program::Main(System.String[])
+        FNDA:0,System.Void CoverageTest.App.Program::Main(System.String[])
+        DA:8,0
+        DA:9,0
+        DA:10,0
+        LF:3
+        LH:0
+        BRF:0
+        BRH:0
+        FNF:1
+        FNH:0
+        end_of_record
+        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs
+        FN:9,System.String CoverageTest.App.SubjectOf`1::NameOf()
+        FNDA:0,System.String CoverageTest.App.SubjectOf`1::NameOf()
+        DA:10,0
+        DA:11,0
+        DA:12,0
+        LF:3
+        LH:0
+        BRF:0
+        BRH:0
+        FNF:1
+        FNH:0
+        end_of_record
+    </script>
+
+    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\ClassLibrary1\Class1.cs" type="text/template">
+        using System;
+
+        namespace ClassLibrary1
+        {
+        public class Class1
+        {
+        public string MyProperty { get; set; }
+
+        public void Do()
+        {
+        if (string.IsNullOrEmpty(MyProperty))
+        {
+        MyProperty = "Empty";
+        }
+        }
+        }
+        }
+
+    </script>
+    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs" type="text/template">
+        using System;
+        using System.Collections.Generic;
+        using System.Text;
+
+        namespace CoverageTest.App
+        {
+        public class Calculator
+        {
+        public int Add(int number1, int number2)
+        {
+        return number1 + number2;
+        }
+
+        public int Devide(int number1, int number2)
+        {
+        if (number1 == 0)
+        {
+        throw new ArgumentException("Devide by zero", nameof(number1));
+        }
+
+        return number2 == 1 ? number1 : number1 / number2;
+        }
+        }
+        }
+
+    </script>
+    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs" type="text/template">
+        using System;
+
+        namespace CoverageTest.App
+        {
+        class Program
+        {
+        static void Main(string[] args)
+        {
+        Console.WriteLine("Hello World!");
+        }
+        }
+        }
+
+    </script>
+    <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs" type="text/template">
+        using System;
+        using System.Collections.Generic;
+        using System.Text;
+
+        namespace CoverageTest.App
+        {
+        public class SubjectOf
+        <T>
+            {
+            public string NameOf()
+            {
+            return typeof(T).Name;
+            }
+            }
+            }
+
+    </script>
+
+    <script id="mainTemplate" type="text/template">
+        <h1>Coverage report</h1>
+        <p>Total coverage: <%- model.totalCoverage %>%</p>
+        <h2>Files</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Line</th>
+                    <th>Branch</th>
+                    <th>Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each( model.listItems, function( listItem ){ %>
+                <tr>
+                    <td><a href="#file=<%- encodeURI(listItem.file) %>"><%- listItem.shortFile %></a></td>
+                    <td><%- listItem.line %></td>
+                    <td><%- listItem.branch %></td>
+                    <td><%- listItem.method %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </script>
+
+    <script id="fileTemplate" type="text/template">
+        <h1>File report</h1>
+        <p>File: <%- model.item.shortFile %></p>
+        <p><a href="#">Back</a></p>
+        <pre><%- model.source %></pre>
+    </script>
+
+    <script>
+        // source from: https://github.com/davglass/lcov-parse/blob/master/lib/index.js (ac888aa  on Jun 17, 2014)
+        function lcov_parse(str, cb) {
+            var data = [], item;
+
+            ['end_of_record'].concat(str.split('\n')).forEach(function (line) {
+                line = line.trim();
+                var allparts = line.split(':'),
+                    parts = [allparts.shift(), allparts.join(':')],
+                    lines, fn;
+
+                switch (parts[0].toUpperCase()) {
+                    case 'TN':
+                        item.title = parts[1].trim();
+                        break;
+                    case 'SF':
+                        item.file = parts.slice(1).join(':').trim();
+                        break;
+                    case 'FNF':
+                        item.functions.found = Number(parts[1].trim());
+                        break;
+                    case 'FNH':
+                        item.functions.hit = Number(parts[1].trim());
+                        break;
+                    case 'LF':
+                        item.lines.found = Number(parts[1].trim());
+                        break;
+                    case 'LH':
+                        item.lines.hit = Number(parts[1].trim());
+                        break;
+                    case 'DA':
+                        lines = parts[1].split(',');
+                        item.lines.details.push({
+                            line: Number(lines[0]),
+                            hit: Number(lines[1])
+                        });
+                        break;
+                    case 'FN':
+                        fn = parts[1].split(',');
+                        item.functions.details.push({
+                            name: fn[1],
+                            line: Number(fn[0])
+                        });
+                        break;
+                    case 'FNDA':
+                        fn = parts[1].split(',');
+                        item.functions.details.some(function (i, k) {
+                            if (i.name === fn[1] && i.hit === undefined) {
+                                item.functions.details[k].hit = Number(fn[0]);
+                                return true;
+                            }
+                        });
+                        break;
+                    case 'BRDA':
+                        fn = parts[1].split(',');
+                        item.branches.details.push({
+                            line: Number(fn[0]),
+                            block: Number(fn[1]),
+                            branch: Number(fn[2]),
+                            taken: ((fn[3] === '-') ? 0 : Number(fn[3]))
+                        });
+                        break;
+                    case 'BRF':
+                        item.branches.found = Number(parts[1]);
+                        break;
+                    case 'BRH':
+                        item.branches.hit = Number(parts[1]);
+                        break;
+                }
+
+                if (line.indexOf('end_of_record') > -1) {
+                    data.push(item);
+                    item = {
+                        lines: {
+                            found: 0,
+                            hit: 0,
+                            details: []
+                        },
+                        functions: {
+                            hit: 0,
+                            found: 0,
+                            details: []
+                        },
+                        branches: {
+                            hit: 0,
+                            found: 0,
+                            details: []
+                        }
+                    };
+                }
+            });
+
+            data.shift();
+
+            if (data.length) {
+                cb(null, data);
+            } else {
+                cb('Failed to parse string');
+            }
+        };
+
+        function longest_common_str(data, separator) {
+            var sorted = _.clone(data).sort();
+            var parts = sorted[0].split(separator);
+            var str = longest = '';
+            for (var i = 0; i < parts.length; i++) {
+                str += parts[i] + separator;
+                if (_.every(sorted, s => s.startsWith(str))) {
+                    longest = str;
+                } else {
+                    break;
+                }
+            }
+            return longest;
+        }
+
+        function parseHashBangArgs(aURL) {
+            aURL = aURL || window.location.href;
+            if (aURL.indexOf('#') < 0) { return null; }
+
+            var hashes = aURL.split('#')[1].split('&');
+            var vars = {};
+            for (var i = 0; i < hashes.length; i++) {
+                var hash = hashes[i].split('=');
+                if (hash[0]===''){ continue; }
+                vars[hash[0]] = hash.length > 1 ? decodeURI(hash[1]) : null;
+            }
+            return _.size(vars) > 0 ? vars : null;
+        }
+
+    </script>
+
+    <script src="https://underscorejs.org/underscore-min.js"></script>
+
+    <script>
+        _.templateSettings.variable = 'model';
+        var mainTemplate = _.template(document.getElementById('mainTemplate').textContent);
+        var fileTemplate = _.template(document.getElementById('fileTemplate').textContent);
+        var tCoverage = { lcovData: null, total: 0, longestPath: '', items: [] };
+
+        function HashHandler(e) {
+            handleRoute(e.newURL);
+        }
+
+        function LoadHandler() {
+            readCoverage();
+            setTimeout(checkHash, 200);
+        }
+
+        function checkHash() {
+            handleRoute(window.location.toString());
+        }
+
+        function handleRoute(url) {
+            var parts = parseHashBangArgs(url);
+            if (!parts) {
+                showHome();
+                return;
+            }
+
+            if (parts.file) {
+                showFile(parts.file);
+            }
+        }
+
+        function showFile(filePath) {
+            if (!tCoverage.lcovData) { return; }
+
+            var item = _.find(tCoverage.items, i => i.file == filePath);
+            var source = document.getElementById(filePath).textContent.trim();
+            loadTemplate(fileTemplate, { item, source });
+        }
+
+        function showHome() {
+            if (!tCoverage.lcovData) { return; }
+
+            loadTemplate(mainTemplate, { totalCoverage: tCoverage.total, listItems: tCoverage.items });
+        }
+
+        function loadTemplate(template, data) {
+            var main = document.getElementById('main');
+            main.innerHTML = template(data);
+        }
+
+        function readCoverage() {
+            var src = document.getElementById('lcovSource');
+            lcov_parse(src.textContent.trim(), function (err, data) {
+                if (err) { console.error(err); return; }
+
+                tCoverage.longestPath = longest_common_str(data.map(i => i.file), '\\');
+
+                var hit = found = 0;
+                var items = [];
+                for (var i = 0; i < data.length; i++) {
+                    hit += data[i].lines.hit;
+                    found += data[i].lines.found;
+                    items.push({
+                        file: data[i].file,
+                        shortFile: data[i].file.replace(tCoverage.longestPath, ''),
+                        line: (data[i].lines.hit / data[i].lines.found) * 100,
+                        branch: (data[i].branches.hit / data[i].branches.found) * 100,
+                        method: (data[i].functions.hit / data[i].functions.found) * 100,
+                    });
+                }
+
+                tCoverage.total = (hit / found) * 100;
+                tCoverage.lcovData = data;
+                tCoverage.items = items;
+            });
+        }
+
+        window.addEventListener("hashchange", HashHandler, false);
+        window.addEventListener("load", LoadHandler, false);
+    </script>
+
+</body>
+
+</html>

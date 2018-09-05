@@ -5,6 +5,10 @@ using Thumnet.CoverageReport.Core.Models;
 
 namespace Thumnet.CoverageReport.Core.Parsers
 {
+    /// <summary>
+    /// LCOV file parser
+    /// based on the lcov-parse (Javascript) - https://github.com/davglass/lcov-parse/blob/master/lib/index.js
+    /// </summary>
     public class LcovParser : ICoverageParser
     {
         private readonly string _filepath;

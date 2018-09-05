@@ -5,7 +5,12 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thumnet.CoverageReport.Core", "Thumnet.CoverageReport.Core\Thumnet.CoverageReport.Core.csproj", "{3195ED24-A9F5-406D-8D83-25225B920E52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thumnet.CoverageReport.ConsoleApp", "Thumnet.CoverageReport.ConsoleApp\Thumnet.CoverageReport.ConsoleApp.csproj", "{A1BAD708-72F9-4A75-BB0E-9798504EA6BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thumnet.CoverageReport.ConsoleApp", "Thumnet.CoverageReport.ConsoleApp\Thumnet.CoverageReport.ConsoleApp.csproj", "{A1BAD708-72F9-4A75-BB0E-9798504EA6BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB5ECD16-3C54-471D-9670-4B9C2A4EA465}"
+	ProjectSection(SolutionItems) = preProject
+		generated-sample.html = generated-sample.html
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
