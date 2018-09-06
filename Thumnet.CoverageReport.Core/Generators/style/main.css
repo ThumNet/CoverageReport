@@ -7,6 +7,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+a, a:visited {
+    color: steelblue;
+}
+
 table {
     border-spacing: 0;    
 }
@@ -32,6 +36,9 @@ tbody td {
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
     content: " \25B4\25BE"
 }
+
+.progress { width: 60px; border-radius: 3px; border: 1px solid #ccc; }
+.progress .bar { height: 14px; }
 
 .code {
     counter-reset: line;

@@ -25,24 +25,45 @@
 
     <script id="mainTemplate" type="text/template">
         <h1>Coverage report</h1>
-        <p>Total coverage: <%- model.totalCoverage %>%</p>
+        <p style="background-color:<%- getColor(model.totalCoverage) %>;">Total coverage: <%- model.totalCoverage %>%</p>
         <h2>Files</h2>
         <table class="sortable">
             <thead>
                 <tr>
                     <th>File</th>
-                    <th>Line</th>
-                    <th>Branch</th>
-                    <th>Method</th>
+                    <th colspan="3">Lines</th>
+                    <th colspan="3">Branches</th>
+                    <th colspan="3">Methods</th>
                 </tr>
             </thead>
             <tbody>
-                <% _.each( model.listItems, function( listItem ){ %>
+                <% _.each( model.listItems, function( item ){ %>
                 <tr>
-                    <td><a href="#file=<%- encodeURI(listItem.file) %>"><%- listItem.shortFile %></a></td>
-                    <td><%- listItem.line %></td>
-                    <td><%- listItem.branch %></td>
-                    <td><%- listItem.method %></td>
+                    <td><a href="#file=<%- encodeURI(item.file) %>"><%- item.shortFile %></a></td>
+
+                    <td>
+                        <div class="progress">
+                            <div class="bar" style="width:<%- item.line %>%;background-color:<%- getColor(item.line) %>;"></div>
+                        </div>
+                    </td>
+                    <td><%- item.line %>%</td>
+                    <td><%- item.lcov.lines.hit %>/<%- item.lcov.lines.found %></td>
+
+                    <td>
+                        <div class="progress" >
+                            <div class="bar" style="width:<%- item.branch %>%;background-color:<%- getColor(item.branch) %>;"></div>
+                        </div>
+                    </td>
+                    <td><%- item.branch %>%</td>
+                    <td><%- item.lcov.branches.hit %>/<%- item.lcov.branches.found %></td>
+
+                    <td>
+                        <div class="progress" >
+                            <div class="bar" style="width:<%- item.method %>%;background-color:<%- getColor(item.method) %>;"></div>
+                        </div>
+                    </td>
+                    <td><%- item.method %>%</td>
+                    <td><%- item.lcov.functions.hit %>/<%- item.lcov.functions.found %></td>
                 </tr>
                 <% }); %>
             </tbody>
@@ -73,7 +94,7 @@
         var mainTemplate = _.template(document.getElementById('mainTemplate').textContent);
         var fileTemplate = _.template(document.getElementById('fileTemplate').textContent);
 
-        var tCoverage = { lcovData: null, total: 0, longestPath: '', items: [] };
+        var tCoverage = { lcovData: null, currentItem: null, total: 0, longestPath: '', items: [] };
 
         function HashHandler(e) {
             handleRoute(e.newURL);
@@ -100,6 +121,18 @@
             }
         }
 
+        function getColor(percentage){
+            //percentage from 0 to 100
+            var hue=((percentage/100)*120).toString(10);
+            return ["hsl(",hue,",50%,50%)"].join("");
+        }
+
+        function getCoverageClass(percentage) {
+            return percentage > 60 
+                ? percentage > 80 ? 'good' : '' 
+                : 'poor'; 
+        }
+
         function getLineClass(lcovItem, lineNumber) {
             var line = _.find(lcovItem.lines.details, function (item) { return item.line === lineNumber; });
             var func = _.find(lcovItem.functions.details, function (item) { return item.line === lineNumber; });
@@ -111,6 +144,7 @@
             if (!tCoverage.lcovData) { return; }
 
             var item = _.find(tCoverage.items, function (item) { return item.file === filePath; });
+            tCoverage.currentItem = item;
             var sourceCompressed = coverageReport[filePath];
             var source = LZString.decompressFromBase64(sourceCompressed);
             loadTemplate(fileTemplate, { item: item, source: source });
@@ -129,9 +163,14 @@
             main.innerHTML = template(data);
         }
 
+        function percentage(part, set) {
+            return ((part / set) * 100).toFixed(2);
+        }
+
         function readCoverage() {
             var lcovCompressed = coverageReport['lcovSource'];
             var lcovSrc = LZString.decompressFromBase64(lcovCompressed);
+
             lcov_parse(lcovSrc.trim(), function (err, data) {
                 if (err) { console.error(err); return; }
 
@@ -148,13 +187,13 @@
                         file: data[i].file,
                         lcov: data[i],
                         shortFile: data[i].file.replace(tCoverage.longestPath, ''),
-                        line: (data[i].lines.hit / data[i].lines.found) * 100,
-                        branch: (data[i].branches.hit / data[i].branches.found) * 100,
-                        method: (data[i].functions.hit / data[i].functions.found) * 100,
+                        line: percentage(data[i].lines.hit, data[i].lines.found),
+                        branch: percentage(data[i].branches.hit, data[i].branches.found),
+                        method: percentage(data[i].functions.hit, data[i].functions.found),
                     });
                 }
 
-                tCoverage.total = (hit / found) * 100;
+                tCoverage.total = percentage(hit, found);
                 tCoverage.lcovData = data;
                 tCoverage.items = items;
             });
