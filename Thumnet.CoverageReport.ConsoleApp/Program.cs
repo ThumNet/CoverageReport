@@ -29,8 +29,8 @@ namespace Thumnet.CoverageReport.ConsoleApp
             //var decompressed = LzString.DecompressFromUtf16(compressed);
 
             //Console.ReadLine();
-
-            var inlineTemplate = new HtmlInlineTemplate(string.Join(Environment.NewLine, parser.TextLines), sourceFiles);
+            var lcovSource = LzString.CompressToUtf16(string.Join(Environment.NewLine, parser.TextLines));
+            var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
             var generated = inlineTemplate.TransformText();
             File.WriteAllText(@".\generated.html", generated);
 

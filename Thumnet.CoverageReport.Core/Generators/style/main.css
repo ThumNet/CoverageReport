@@ -1,0 +1,95 @@
+﻿body {
+    background: #fafbfc;
+    line-height: 26px;
+    font-size: 14px;
+    color: #333;
+    word-wrap: break-word !important;
+    font-family: 'Open Sans', sans-serif;
+}
+
+table {
+    border-spacing: 0;    
+}
+
+thead th {
+    text-align: left;
+    border-bottom: 2px solid #999;
+    background-color: #efefef;
+}
+
+th, td {
+    padding: .2em .5em;
+}
+
+tbody td {
+    border-bottom: 1px solid #efefef;
+}
+
+    tbody tr:hover {
+        background-color: #eee;
+    }
+
+
+
+.code {
+    counter-reset: line;
+    font-family: monospace;
+}
+
+.code p {
+    white-space: pre;
+    line-height: 1rem;
+    counter-increment: line;
+    margin: 0;
+    color: #333;
+}
+
+.code p.notmeasured {
+    color: #999;
+}
+
+.code p.hit {
+    background-color: rgba(131, 255, 131, 0.3);
+}
+
+.code p.nothit {
+    background-color: rgba(255, 131, 131, 0.3);
+}
+
+.code p:hover {
+    background-color: #efefef;
+    cursor: default;
+}
+
+.code p.hit:hover {
+    background-color: rgba(131, 255, 131, 0.5);
+}
+
+.code p.nothit:hover {
+    background-color: rgba(255, 131, 131, 0.5);
+}
+
+.code p::before {
+    content: counter(line) ".";
+    display: inline-block;
+    text-align: right;
+    width: 2em;
+    padding-right: .5em;
+    margin-right: .5em;
+    color: #aaa;
+    border-right: 2px solid #999;
+    background-color: #efefef;
+}
+
+.code p.hit::before {
+    border-right-color: green;
+}
+
+.code p.nothit::before {
+    border-right-color: red;
+}
+
+.code p:hover::before {
+    background-color: #ececec;
+    color: #333;
+}

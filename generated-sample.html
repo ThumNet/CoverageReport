@@ -6,70 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coverage Viewer</title>
-    <style>
-        .code {
-            counter-reset: line;
-            font-family: monospace;
-        }
-
-        .code p {
-            white-space: pre;
-            line-height: 1rem;
-            counter-increment: line;
-            margin: 0;
-            color: #333;
-        }
-
-        .code p.notmeasured {
-            color: #999;
-        }
-
-        .code p.hit {
-            background-color: rgba(131, 255, 131, 0.3);
-        }
-
-        .code p.nothit {
-            background-color: rgba(255, 131, 131, 0.3);
-        }
-
-        .code p:hover {
-            background-color: #efefef;
-            cursor: default;
-        }
-
-        .code p.hit:hover {
-            background-color: rgba(131, 255, 131, 0.5);
-        }
-
-        .code p.nothit:hover {
-            background-color: rgba(255, 131, 131, 0.5);
-        }
-
-        .code p::before {
-            content: counter(line) ".";
-            display: inline-block;
-            text-align: right;
-            width: 2em;
-            padding-right: .5em;
-            margin-right: .5em;
-            color: #aaa;
-            border-right: 2px solid #999;
-            background-color: #efefef;
-        }
-
-        .code p.hit::before {
-            border-right-color: green;
-        }
-
-        .code p.nothit::before {
-            border-right-color: red;
-        }
-
-        .code p:hover::before {
-            background-color: #ececec;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="Thumnet.CoverageReport.Core/Generators/style/main.css" />
 </head>
 
 <body>
@@ -77,91 +14,20 @@
     <div id="main"></div>
 
     <script id="lcovSource" type="text/template">
-        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\ClassLibrary1\Class1.cs
-        FN:6,System.String ClassLibrary1.Class1::get_MyProperty()
-        FNDA:0,System.String ClassLibrary1.Class1::get_MyProperty()
-        DA:7,0
-        FN:9,System.Void ClassLibrary1.Class1::Do()
-        FNDA:0,System.Void ClassLibrary1.Class1::Do()
-        DA:10,0
-        DA:11,0
-        DA:12,0
-        DA:13,0
-        DA:14,0
-        DA:15,0
-        BRDA:11,14,0,0
-        BRDA:11,14,1,0
-        LF:7
-        LH:0
-        BRF:2
-        BRH:0
-        FNF:2
-        FNH:0
-        end_of_record
-        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs
-        FN:9,System.Int32 CoverageTest.App.Calculator::Add(System.Int32,System.Int32)
-        FNDA:1,System.Int32 CoverageTest.App.Calculator::Add(System.Int32,System.Int32)
-        DA:10,1
-        DA:11,1
-        DA:12,1
-        FN:14,System.Int32 CoverageTest.App.Calculator::Devide(System.Int32,System.Int32)
-        FNDA:1,System.Int32 CoverageTest.App.Calculator::Devide(System.Int32,System.Int32)
-        DA:15,1
-        DA:16,1
-        DA:17,0
-        DA:18,0
-        DA:21,1
-        DA:22,1
-        BRDA:16,7,0,0
-        BRDA:16,7,1,1
-        BRDA:21,28,0,0
-        BRDA:21,28,1,1
-        LF:9
-        LH:7
-        BRF:4
-        BRH:2
-        FNF:2
-        FNH:2
-        end_of_record
-        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs
-        FN:7,System.Void CoverageTest.App.Program::Main(System.String[])
-        FNDA:0,System.Void CoverageTest.App.Program::Main(System.String[])
-        DA:8,0
-        DA:9,0
-        DA:10,0
-        LF:3
-        LH:0
-        BRF:0
-        BRH:0
-        FNF:1
-        FNH:0
-        end_of_record
-        SF:C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs
-        FN:9,System.String CoverageTest.App.SubjectOf`1::NameOf()
-        FNDA:0,System.String CoverageTest.App.SubjectOf`1::NameOf()
-        DA:10,0
-        DA:11,0
-        DA:12,0
-        LF:3
-        LH:0
-        BRF:0
-        BRH:0
-        FNF:1
-        FNH:0
-        end_of_record
+        ᥡ䐷Ƥ恚հ㎡☢㯺Ūၓី䅜ǰŰ଀᛼䪋怾檒ƭুᚠ湈ѐຈ墶N栰布怡䠤堢ᭂ癯䀱䉜㉪慦砠偀Ą怡堠榣珤౮⡸႒ಠ㬾$ㄳ吆ᝊ椙嘦Єࠣ琡㌘%㉍!抨០pŉ稦1@䰠î㓖嫻洼⼎൏ʲ啰倏Ŵܧ䋂㈑摤檎孌.敕柅䀡ᰥ⬻℠൶䍀ŗᚚ擋㻕દ堦㚳墍濨妮泇㐓䥥侭⻍㇙漉Ⰴڎ⬝⺼䪠঩玐ڀ糜x㾀ઠւ㰠℠ॡ畐唟᷷₥⅐瑉犳䁝⺪†┒碘ḥ㶑池梇揲⊎䢢㢆Ⴭ֡Ԑ䙍ಡ䶔偄̠⇈ౖ஠ၨਵદ䄈ٓૠ燘㸠䖁ࡅ䔴呄გ壌≂煤䙉ไࢹ派䢆൦⋁$䥙ɯ嘎燫㲞ᅼ囥㖕㍽啓Ō䚃᥄箃⳱㟜㼑俹㗅嬷䣴ྻᜋ㎯ᗺ噅╴璊嫎ݼ䏛Ἇドယᇻᡚ秄㞜䕬稣དྷ朎禶ۄぐⵦ囖ᙛ㝫ɤ燱͛⨔灁䩁汹儭倍⛆罞‛⇬屐浯冶牿ಖ༄时䷛歡碚Ἒᐙ烜Ⳝ⃊昆ㆿÞ异砠ᰠ毲彎幕湆獓⾀摜絑穯䉇቞匵現㡠֠⁄݂㋵ବ౻ூࡼ̜䉢߄剰掂ɲ䭲婾䩀䙹䫒瀪Ǡ␨⪀ᰯİ㈲䆒ᅩ䃐奵塊ᥩ㧦盳孠梶䄐䔶愈䆯叮䎮㏑㛾楆ṏ䖐爰ᆤ⸹戎熤単ḠΈ}ഃ奇⢳භ✶巄缿ጴ厬厪Φ勔爆Š禂ᢏ⁇ր柯ʑሹ珡㥂┡᥃䒐䵇␹ፂ擹⤹摈位␙ᴴᐸ壌挬催䩘撺喠⤧ဠᖡర\䬦ႚ傁ഓ啫ᔂ㖭⹩䭍昙⣈&㖠择䐨喌姯ቮ䫍捵ᗳ姸泏ᙐ䋋Õ䂭啰从曼e≜杍烂瀽斂潜,ࡷ搸瀶堸牨ᘁ僙䤠
     </script>
 
     <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\ClassLibrary1\Class1.cs" type="text/template">
-        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠᭢₠٬f½ڐ䁦Ḡ潜ᣂルϗ匩⌲凓ᴥဣ㣤挫⽶ᅊ♬੮䣐ƄࠠᕘϹ䫄癠䇆੊㉬Ϗ渢紐䞍෶䫨ü嚀3ఠѪ怡․创絕缞〠᦬ᙐ沀πɨ䀠狠窚\厠੎䍀㫥䵌㚖ޘ扶啌⊹浬㝺渍ภ常1ێ傪᧠甔綇欓䗜㳰  
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠᭢₠٬f½ڐ䁦Ḡ潜ᣂルϗ匩⌲凓ᴥဣ㣤挫⽶ᅊ♬੮䣐ƄࠠᕘϹ䫄癠䇆੊㉬Ϗ渢紐䞍෶䫨ü嚀3ఠѪ怡․创絕缞〠᦬ᙐ沀πɨ䀠狠窚\厠੎䍀㫥䵌㚖ޘ扶啌⊹浬㝺渍ภ常1ێ傪᧠甔綇欓䗜㳰
     </script>
     <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Calculator.cs" type="text/template">
-        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡ״嵯☦筂⢙皮㭼⎬⧵漏↤䍀懬F㒠Ւ☢మ䆕瀢ᠠ㑩࠴幡㞠ӠӀ䛤惂䵭Ṵ㉐ޢி䱉焴怡哝檾඀嗆+珤㛧᳼ṙ1⨾䰭᪭䣍ဖ䯫ᖝ媦璋◊㤆#ᣢ㋋筐~Ꮼ!䪙㲯䶜ᶰ6ṅ'㬅⡰㳣慡祎ᤠʨ擺㪩䆂㈠ᄺ懒沀ᜢ̠Ý㱪ശ⭉⩪ᬏ㬼͚仉ᬝ㍼ࠊ毕ᶎ例⭝⽡䀯愄ِ+俬ఠ窞⊌摙ಸ冸攠 
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡ״嵯☦筂⢙皮㭼⎬⧵漏↤䍀懬F㒠Ւ☢మ䆕瀢ᠠ㑩࠴幡㞠ӠӀ䛤惂䵭Ṵ㉐ޢி䱉焴怡哝檾඀嗆+珤㛧᳼ṙ1⨾䰭᪭䣍ဖ䯫ᖝ媦璋◊㤆#ᣢ㋋筐~Ꮼ!䪙㲯䶜ᶰ6ṅ'㬅⡰㳣慡祎ᤠʨ擺㪩䆂㈠ᄺ懒沀ᜢ̠Ý㱪ശ⭉⩪ᬏ㬼͚仉ᬝ㍼ࠊ毕ᶎ例⭝⽡䀯愄ِ+俬ఠ窞⊌摙ಸ冸攠
     </script>
     <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\Program.cs" type="text/template">
-        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠笠滈ʔᕊu❀ຠ₹ᥜþ㱐ኂ⠡娱ģ!⋾䨻㪑䦃㥆瓡⑌䘲䙃㵐Fᠡ㊥ဠ⡰婢䀭倫冨⋪Р╆佦හਨだ䈉勈帠㫓䴠͉է堡ࠠወ榉㴬ᙞ䋭აȱ匜㡚傠⿀☶宠樠 
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԧ䐢෵∠ݢ̺冠゠笠滈ʔᕊu❀ຠ₹ᥜþ㱐ኂ⠡娱ģ!⋾䨻㪑䦃㥆瓡⑌䘲䙃㵐Fᠡ㊥ဠ⡰婢䀭倫冨⋪Р╆佦හਨだ䈉勈帠㫓䴠͉է堡ࠠወ榉㴬ᙞ䋭აȱ匜㡚傠⿀☶宠樠
     </script>
     <script id="C:\Users\Jeffrey.Tummers\sources\CoverageTest\CoverageTest.App\SubjectOfT.cs" type="text/template">
-        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡު瀥ゆ‣搠映ṩ?ự枋䒒╚巽瑐ᑞࢠ๥⪮ࠠ倢⤃䥐Ӓ奯ᔹణ悡䍀ᇵ⢴ア撱㒷᫈ᓉ䀢絫Θ⇼ဠ 
+        ᗣ᱅䄌຀Ȧ⠳戠尪き䃼ˠԪⓒᅣƤϸǖ媠掄扱ѲΪ債n㈉柮ാऺ㩲J吠ứ̐․ᯅ℠Ą彵صW⽅⣉割䠤௏⯠ง䌡晚瀠⎊繑痉ᒡު瀥ゆ‣搠映ṩ?ự枋䒒╚巽瑐ᑞࢠ๥⪮ࠠ倢⤃䥐Ӓ奯ᔹణ悡䍀ᇵ⢴ア撱㒷᫈ᓉ䀢絫Θ⇼ဠ
     </script>
 
     <script id="mainTemplate" type="text/template">
@@ -196,151 +62,22 @@
         <p><a href="#">Back</a></p>
         <div class="code">
             <% _.each(model.source.split('\n'), function(line, index) { %>
-                <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
+            <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
             <% }); %>
         </div>
-        <pre><%- model.source %></pre>
+        <!--<pre><%- model.source %></pre>-->
     </script>
 
-    <script>
-        // source from: https://github.com/davglass/lcov-parse/blob/master/lib/index.js (ac888aa  on Jun 17, 2014)
-        function lcov_parse(str, cb) {
-            var data = [], item;
-
-            ['end_of_record'].concat(str.split('\n')).forEach(function (line) {
-                line = line.trim();
-                var allparts = line.split(':'),
-                    parts = [allparts.shift(), allparts.join(':')],
-                    lines, fn;
-
-                switch (parts[0].toUpperCase()) {
-                    case 'TN':
-                        item.title = parts[1].trim();
-                        break;
-                    case 'SF':
-                        item.file = parts.slice(1).join(':').trim();
-                        break;
-                    case 'FNF':
-                        item.functions.found = Number(parts[1].trim());
-                        break;
-                    case 'FNH':
-                        item.functions.hit = Number(parts[1].trim());
-                        break;
-                    case 'LF':
-                        item.lines.found = Number(parts[1].trim());
-                        break;
-                    case 'LH':
-                        item.lines.hit = Number(parts[1].trim());
-                        break;
-                    case 'DA':
-                        lines = parts[1].split(',');
-                        item.lines.details.push({
-                            line: Number(lines[0]),
-                            hit: Number(lines[1])
-                        });
-                        break;
-                    case 'FN':
-                        fn = parts[1].split(',');
-                        item.functions.details.push({
-                            name: fn[1],
-                            line: Number(fn[0])
-                        });
-                        break;
-                    case 'FNDA':
-                        fn = parts[1].split(',');
-                        item.functions.details.some(function (i, k) {
-                            if (i.name === fn[1] && i.hit === undefined) {
-                                item.functions.details[k].hit = Number(fn[0]);
-                                return true;
-                            }
-                        });
-                        break;
-                    case 'BRDA':
-                        fn = parts[1].split(',');
-                        item.branches.details.push({
-                            line: Number(fn[0]),
-                            block: Number(fn[1]),
-                            branch: Number(fn[2]),
-                            taken: ((fn[3] === '-') ? 0 : Number(fn[3]))
-                        });
-                        break;
-                    case 'BRF':
-                        item.branches.found = Number(parts[1]);
-                        break;
-                    case 'BRH':
-                        item.branches.hit = Number(parts[1]);
-                        break;
-                }
-
-                if (line.indexOf('end_of_record') > -1) {
-                    data.push(item);
-                    item = {
-                        lines: {
-                            found: 0,
-                            hit: 0,
-                            details: []
-                        },
-                        functions: {
-                            hit: 0,
-                            found: 0,
-                            details: []
-                        },
-                        branches: {
-                            hit: 0,
-                            found: 0,
-                            details: []
-                        }
-                    };
-                }
-            });
-
-            data.shift();
-
-            if (data.length) {
-                cb(null, data);
-            } else {
-                cb('Failed to parse string');
-            }
-        };
-
-        function longest_common_str(data, separator) {
-            var sorted = _.clone(data).sort();
-            var parts = sorted[0].split(separator);
-            var str = longest = '';
-            for (var i = 0; i < parts.length; i++) {
-                str += parts[i] + separator;
-                if (_.every(sorted, function (s) { return s.indexOf(str) === 0 })) { // IE11 doesn't support startsWith :(
-                    longest = str;
-                } else {
-                    break;
-                }
-            }
-            return longest;
-        }
-
-        function parseHashBangArgs(aURL) {
-            aURL = aURL || window.location.href;
-            if (aURL.indexOf('#') < 0) { return null; }
-
-            var hashes = aURL.split('#')[1].split('&');
-            var vars = {};
-            for (var i = 0; i < hashes.length; i++) {
-                var hash = hashes[i].split('=');
-                if (hash[0] === '') { continue; }
-                vars[hash[0]] = hash.length > 1 ? decodeURI(hash[1]) : null;
-            }
-            return _.size(vars) > 0 ? vars : null;
-        }
-
-    </script>
-
-    <script src="http://pieroxy.net//lzstring/lz-string-1.4.4.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="Thumnet.CoverageReport.Core/Generators/scripts/tools.js"></script>
+    <script src="Thumnet.CoverageReport.Core/Generators/scripts/underscore-min.js"></script>
+    <script src="Thumnet.CoverageReport.Core/Generators/scripts/lcov-parse-min.js"></script>
+    <script src="Thumnet.CoverageReport.Core/Generators/scripts/lz-string-min.js"></script>
 
     <script>
         _.templateSettings.variable = 'model';
         var mainTemplate = _.template(document.getElementById('mainTemplate').textContent);
         var fileTemplate = _.template(document.getElementById('fileTemplate').textContent);
+        
         var tCoverage = { lcovData: null, total: 0, longestPath: '', items: [] };
 
         function HashHandler(e) {
@@ -369,17 +106,16 @@
         }
 
         function getLineClass(lcovItem, lineNumber) {
-            var line = _.find(lcovItem.lines.details, function(item){ return item.line == lineNumber; });
-            var func = _.find(lcovItem.functions.details, function(item){ return item.line == lineNumber; });
+            var line = _.find(lcovItem.lines.details, function (item) { return item.line === lineNumber; });
+            var func = _.find(lcovItem.functions.details, function (item) { return item.line === lineNumber; });
             var subject = line || func;
-            return subject == null ? 'notmeasured' : subject.hit === 1 ? 'hit' : 'nothit';
+            return !subject ? 'notmeasured' : subject.hit === 1 ? 'hit' : 'nothit';
         }
 
         function showFile(filePath) {
             if (!tCoverage.lcovData) { return; }
 
-            var item = _.find(tCoverage.items, function(item){ return item.file == filePath; });
-            console.log(item);
+            var item = _.find(tCoverage.items, function (item) { return item.file === filePath; });
             var sourceCompressed = document.getElementById(filePath).textContent.trim();
             var source = LZString144.decompressFromUTF16(sourceCompressed);
             loadTemplate(fileTemplate, { item: item, source: source });
@@ -397,14 +133,17 @@
         }
 
         function readCoverage() {
-            var src = document.getElementById('lcovSource');
-            lcov_parse(src.textContent.trim(), function (err, data) {
+            var lcovCompressed = document.getElementById('lcovSource').textContent.trim();
+            var lcovSrc = LZString144.decompressFromUTF16(lcovCompressed);
+            lcov_parse(lcovSrc.trim(), function (err, data) {
                 if (err) { console.error(err); return; }
 
-                tCoverage.longestPath = longest_common_str(data.map(function(item){ return item.file; }), '\\');
+                tCoverage.longestPath = longest_common_str(data.map(function (item) { return item.file; }), '\\');
 
-                var hit = found = 0;
-                var items = [];
+                var hit = 0, 
+                    found = 0,
+                    items = [];
+
                 for (var i = 0; i < data.length; i++) {
                     hit += data[i].lines.hit;
                     found += data[i].lines.found;
