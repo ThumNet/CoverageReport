@@ -25,15 +25,26 @@
 
     <script id="mainTemplate" type="text/template">
         <h1>Coverage report</h1>
-        <p style="background-color:<%- getColor(model.totalCoverage) %>;">Total coverage: <%- model.totalCoverage %>%</p>
+
+        <span class="stats" style="background-color:<%- getColor(model.totals.lines.percentage) %>;"> <%- model.totals.lines.hit %>/<%- model.totals.lines.found %> Lines (<%- model.totals.lines.percentage %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.totals.branches.percentage) %>;"> <%- model.totals.branches.hit %>/<%- model.totals.branches.found %> Branches (<%- model.totals.branches.percentage %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.totals.functions.percentage) %>;"> <%- model.totals.functions.hit %>/<%- model.totals.functions.found %> Functions (<%- model.totals.functions.percentage %>%)</span>
+        
         <h2>Files</h2>
+
         <table class="sortable">
             <thead>
                 <tr>
                     <th>File</th>
-                    <th colspan="3">Lines</th>
-                    <th colspan="3">Branches</th>
-                    <th colspan="3">Methods</th>
+                    <th class="sorttable_nosort divider-left">Lines</th>
+                    <th></th>
+                    <th class="sorttable_numeric"></th>
+                    <th class="sorttable_nosort divider-left">Branches</th>
+                    <th></th>
+                    <th class="sorttable_numeric"></th>
+                    <th class="sorttable_nosort divider-left">Functions</th>
+                    <th></th>
+                    <th class="sorttable_numeric"></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +52,7 @@
                 <tr>
                     <td><a href="#file=<%- encodeURI(item.file) %>"><%- item.shortFile %></a></td>
 
-                    <td>
+                    <td class="divider-left">
                         <div class="progress">
                             <div class="bar" style="width:<%- item.line %>%;background-color:<%- getColor(item.line) %>;"></div>
                         </div>
@@ -49,20 +60,20 @@
                     <td><%- item.line %>%</td>
                     <td><%- item.lcov.lines.hit %>/<%- item.lcov.lines.found %></td>
 
-                    <td>
-                        <div class="progress" >
+                    <td class="divider-left">
+                        <div class="progress">
                             <div class="bar" style="width:<%- item.branch %>%;background-color:<%- getColor(item.branch) %>;"></div>
                         </div>
                     </td>
                     <td><%- item.branch %>%</td>
                     <td><%- item.lcov.branches.hit %>/<%- item.lcov.branches.found %></td>
 
-                    <td>
-                        <div class="progress" >
-                            <div class="bar" style="width:<%- item.method %>%;background-color:<%- getColor(item.method) %>;"></div>
+                    <td class="divider-left">
+                        <div class="progress">
+                            <div class="bar" style="width:<%- item.function %>%;background-color:<%- getColor(item.function) %>;"></div>
                         </div>
                     </td>
-                    <td><%- item.method %>%</td>
+                    <td><%- item.function %>%</td>
                     <td><%- item.lcov.functions.hit %>/<%- item.lcov.functions.found %></td>
                 </tr>
                 <% }); %>
@@ -72,8 +83,14 @@
 
     <script id="fileTemplate" type="text/template">
         <h1>File report</h1>
+
+        <span class="stats" style="background-color:<%- getColor(model.item.line) %>;"> <%- model.item.lcov.lines.hit %>/<%- model.item.lcov.lines.found %> Lines (<%- model.item.line %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.item.branche) %>;"> <%- model.item.lcov.branches.hit %>/<%- model.item.lcov.branches.found %> Branches (<%- model.item.branch %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.item.function) %>;"> <%- model.item.lcov.functions.hit %>/<%- model.item.lcov.functions.found %> Functions (<%- model.item.function %>%)</span>
+
         <p>File: <%- model.item.shortFile %></p>
         <p><a href="#">Back</a></p>
+
         <div class="code">
             <% _.each(model.source.split('\n'), function(line, index) { %>
             <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
@@ -94,7 +111,7 @@
         var mainTemplate = _.template(document.getElementById('mainTemplate').textContent);
         var fileTemplate = _.template(document.getElementById('fileTemplate').textContent);
 
-        var tCoverage = { lcovData: null, currentItem: null, total: 0, longestPath: '', items: [] };
+        var tCoverage = { lcovData: null, currentItem: null, totals: null, longestPath: '', items: [] };
 
         function HashHandler(e) {
             handleRoute(e.newURL);
@@ -153,7 +170,7 @@
         function showHome() {
             if (!tCoverage.lcovData) { return; }
 
-            loadTemplate(mainTemplate, { totalCoverage: tCoverage.total, listItems: tCoverage.items });
+            loadTemplate(mainTemplate, { totals: tCoverage.totals, listItems: tCoverage.items });
             var table = document.querySelectorAll('table.sortable')[0];
             sorttable.makeSortable(table);
         }
@@ -176,24 +193,40 @@
 
                 tCoverage.longestPath = longest_common_str(data.map(function (item) { return item.file; }), '\\');
 
-                var hit = 0,
-                    found = 0,
-                    items = [];
+                var items = [],
+                    totals = {
+                        lines: { hit: 0, found: 0 },
+                        branches: { hit: 0, found: 0 },
+                        functions: { hit: 0, found: 0 }
+                    };
 
                 for (var i = 0; i < data.length; i++) {
-                    hit += data[i].lines.hit;
-                    found += data[i].lines.found;
+                    totals.lines.hit += data[i].lines.hit;
+                    totals.lines.found += data[i].lines.found;
+                    totals.branches.hit += data[i].branches.hit;
+                    totals.branches.found += data[i].branches.found;
+                    totals.functions.hit += data[i].functions.hit;
+                    totals.functions.found += data[i].functions.found;
+
                     items.push({
                         file: data[i].file,
                         lcov: data[i],
                         shortFile: data[i].file.replace(tCoverage.longestPath, ''),
                         line: percentage(data[i].lines.hit, data[i].lines.found),
                         branch: percentage(data[i].branches.hit, data[i].branches.found),
-                        method: percentage(data[i].functions.hit, data[i].functions.found),
+                        function: percentage(data[i].functions.hit, data[i].functions.found)
                     });
                 }
 
-                tCoverage.total = percentage(hit, found);
+                var paths = items.map(function (item) { return item.shortFile.replace(/\\/g, '/'); });
+                var tree = hierarchy(paths);
+                console.log(tree);
+
+                totals.lines.percentage = percentage(totals.lines.hit, totals.lines.found);
+                totals.branches.percentage = percentage(totals.branches.hit, totals.branches.found);
+                totals.functions.percentage = percentage(totals.functions.hit, totals.functions.found);
+
+                tCoverage.totals = totals;
                 tCoverage.lcovData = data;
                 tCoverage.items = items;
             });

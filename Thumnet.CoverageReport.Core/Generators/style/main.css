@@ -19,7 +19,13 @@ thead th {
     text-align: left;
     border-bottom: 2px solid #999;
     background-color: #efefef;
+    cursor: pointer;
 }
+
+.divider-left {
+    border-left: 1px solid #999;
+}
+td.divider-left { border-left-color: #efefef; }
 
 th, td {
     padding: .2em .5em;
@@ -36,6 +42,8 @@ tbody td {
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
     content: " \25B4\25BE"
 }
+
+.stats { border-radius: 3px; padding: .3em .6em; }
 
 .progress { width: 60px; border-radius: 3px; border: 1px solid #ccc; }
 .progress .bar { height: 14px; }
