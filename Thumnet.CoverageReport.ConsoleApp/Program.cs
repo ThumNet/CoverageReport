@@ -14,12 +14,14 @@ namespace Thumnet.CoverageReport.ConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            var parser = new LcovParser(@"./coverlet.lcov");
+            var parser = new LcovParser(@"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info");
+
+            Func<string, string> compressMethod = LzString.CompressToBase64;//LzString.CompressToUtf16;
             
             var items = parser.ReadItems().ToList();
             var sourceFiles = items
                 .Select(i => i.File)
-                .ToDictionary(k => k, v => LzString.CompressToUtf16(File.ReadAllText(v)));
+                .ToDictionary(k => k, v => compressMethod(File.ReadAllText(v)));
 
             //var source = File.ReadAllText(items[0].File);
             //Console.WriteLine(source);
@@ -29,7 +31,7 @@ namespace Thumnet.CoverageReport.ConsoleApp
             //var decompressed = LzString.DecompressFromUtf16(compressed);
 
             //Console.ReadLine();
-            var lcovSource = LzString.CompressToUtf16(string.Join(Environment.NewLine, parser.TextLines));
+            var lcovSource = compressMethod(string.Join(Environment.NewLine, parser.TextLines));
             var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
             var generated = inlineTemplate.TransformText();
             File.WriteAllText(@".\generated.html", generated);

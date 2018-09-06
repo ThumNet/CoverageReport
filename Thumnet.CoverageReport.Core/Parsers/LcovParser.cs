@@ -63,12 +63,12 @@ namespace Thumnet.CoverageReport.Core.Parsers
                         assembly.Functions.Details.Add(new CoverageFunctionDetail
                         {
                             Line = int.Parse(parts[0]),
-                            Name = parts[1] 
+                            Name = string.Join(',', parts.Skip(1))
                         });
                         break;
                     case "FNDA":
                         assembly.Functions.Details
-                            .Single(d => d.Name == parts[1])
+                            .Single(d => d.Name == string.Join(',', parts.Skip(1)))
                             .Hit = int.Parse(parts[0]);
                         break;
                     case "BRDA":

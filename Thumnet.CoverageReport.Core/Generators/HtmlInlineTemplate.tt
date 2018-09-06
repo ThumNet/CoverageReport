@@ -1,4 +1,4 @@
-﻿<#@ template language="C#" debug="true" #>
+﻿<#@ template language="C#" #>
 <#@ assembly name="System.Core" #>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,16 +9,15 @@
     <title>Coverage Viewer</title>
 </head>
 <body>
-    
-    <script id="lcovSource" type="text/template">
-		<#= LcovSource #>
+        
+	<script>
+		var coverageReport = {
+			'lcovSource': '<#= LcovSource #>',
+			<# foreach (var sourceFileName in SourceFiles.Keys) { #>
+			'<#= sourceFileName.Replace("\\", "\\\\") #>': '<#= SourceFiles[sourceFileName] #>',
+			<# } #>
+		};
 	</script>
-
-	<# foreach (var sourceFileName in SourceFiles.Keys) { #>
-		<script id="<#= sourceFileName #>" type="text/template">
-			<#= SourceFiles[sourceFileName] #>
-		</script>
-	<# } #>
 
 </body>
 </html>
