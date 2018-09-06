@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Thumnet.CoverageReport.Core;
 using Thumnet.CoverageReport.Core.Generators;
 using Thumnet.CoverageReport.Core.Parsers;
 
@@ -14,7 +13,8 @@ namespace Thumnet.CoverageReport.ConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            var parser = new LcovParser(@"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info");
+            var lcovPath = @"./coverlet.lcov"; // @"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info";
+            var parser = new LcovParser(lcovPath);
 
             Func<string, string> compressMethod = LzString.CompressToBase64;//LzString.CompressToUtf16;
             
