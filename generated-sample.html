@@ -26,11 +26,9 @@
     <script id="mainTemplate" type="text/template">
         <h1>Coverage report</h1>
 
-        <span class="stats" style="background-color:<%- getColor(model.totals.lines.percentage) %>;"> <%- model.totals.lines.hit %>/<%- model.totals.lines.found %> Lines (<%- model.totals.lines.percentage %>%)</span>
-        <span class="stats" style="background-color:<%- getColor(model.totals.branches.percentage) %>;"> <%- model.totals.branches.hit %>/<%- model.totals.branches.found %> Branches (<%- model.totals.branches.percentage %>%)</span>
-        <span class="stats" style="background-color:<%- getColor(model.totals.functions.percentage) %>;"> <%- model.totals.functions.hit %>/<%- model.totals.functions.found %> Functions (<%- model.totals.functions.percentage %>%)</span>
-        
+        <%= partial('stats', model.totals) %>
         <h2>Files</h2>
+        <p><a href="#tree">View hierarchy</a></p>
 
         <table class="sortable">
             <thead>
@@ -52,41 +50,63 @@
                 <tr>
                     <td><a href="#file=<%- encodeURI(item.file) %>"><%- item.shortFile %></a></td>
 
-                    <td class="divider-left">
-                        <div class="progress">
-                            <div class="bar" style="width:<%- item.line %>%;background-color:<%- getColor(item.line) %>;"></div>
-                        </div>
-                    </td>
-                    <td><%- item.line %>%</td>
-                    <td><%- item.lcov.lines.hit %>/<%- item.lcov.lines.found %></td>
-
-                    <td class="divider-left">
-                        <div class="progress">
-                            <div class="bar" style="width:<%- item.branch %>%;background-color:<%- getColor(item.branch) %>;"></div>
-                        </div>
-                    </td>
-                    <td><%- item.branch %>%</td>
-                    <td><%- item.lcov.branches.hit %>/<%- item.lcov.branches.found %></td>
-
-                    <td class="divider-left">
-                        <div class="progress">
-                            <div class="bar" style="width:<%- item.function %>%;background-color:<%- getColor(item.function) %>;"></div>
-                        </div>
-                    </td>
-                    <td><%- item.function %>%</td>
-                    <td><%- item.lcov.functions.hit %>/<%- item.lcov.functions.found %></td>
+                    <%= partial('coverage-cells', item.totals.lines) %>
+                    <%= partial('coverage-cells', item.totals.branches) %>
+                    <%= partial('coverage-cells', item.totals.functions) %>
                 </tr>
                 <% }); %>
             </tbody>
         </table>
     </script>
 
+    <script id="stats-partial" type="text/x-handlebars-template">
+        <span class="stats" style="background-color:<%- getColor(model.lines.percentage) %>;"> <%- model.lines.hit %>/<%- model.lines.found %> Lines (<%- model.lines.percentage %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.branches.percentage) %>;"> <%- model.branches.hit %>/<%- model.branches.found %> Branches (<%- model.branches.percentage %>%)</span>
+        <span class="stats" style="background-color:<%- getColor(model.functions.percentage) %>;"> <%- model.functions.hit %>/<%- model.functions.found %> Functions (<%- model.functions.percentage %>%)</span>
+    </script>
+
+    <script id="coverage-cells-partial" type="text/x-handlebars-template">
+        <td class="divider-left">
+            <div class="progress">
+                <div class="bar" style="width:<%- model.percentage %>%;background-color:<%- getColor(model.percentage) %>;"></div>
+            </div>
+        </td>
+        <td><%- model.percentage %>%</td>
+        <td><%- model.hit %>/<%- model.found %></td>
+    </script>
+
+    <script id="tree-children-partial" type="text/x-handlebars-template">
+        <ul>
+            <% _.each( model, function( node ){ %>
+            <li>
+                <% if (node.children) { %>
+                <input type="checkbox" id="<%- node.path %>" />
+                <label for="<%- node.path %>"><%- node.name %></label>
+                <span class="pull-right"><%= partial('stats', node.totals || node.item.totals) %></span>
+                <%= partial('tree-children', node.children) %>
+                <% } else { %>
+                <a href="#file=<%- encodeURI(node.item.file)  %>"><%- node.name %></a>
+                <span class="pull-right"><%= partial('stats', node.totals || node.item.totals) %></span>
+                <% } %>
+            </li>
+            <% }); %>
+        </ul>
+    </script>
+
+    <script id="treeTemplate" type="text/template">
+        <h1>Coverage report hierarchy</h1>
+
+        <p><a href="#">Back</a></p>
+        <div class="tree">
+            <%= partial('tree-children', model.tree.children) %>
+        </div>
+    </script>
+
+
     <script id="fileTemplate" type="text/template">
         <h1>File report</h1>
 
-        <span class="stats" style="background-color:<%- getColor(model.item.line) %>;"> <%- model.item.lcov.lines.hit %>/<%- model.item.lcov.lines.found %> Lines (<%- model.item.line %>%)</span>
-        <span class="stats" style="background-color:<%- getColor(model.item.branche) %>;"> <%- model.item.lcov.branches.hit %>/<%- model.item.lcov.branches.found %> Branches (<%- model.item.branch %>%)</span>
-        <span class="stats" style="background-color:<%- getColor(model.item.function) %>;"> <%- model.item.lcov.functions.hit %>/<%- model.item.lcov.functions.found %> Functions (<%- model.item.function %>%)</span>
+        <%= partial('stats', model.item.totals) %>
 
         <p>File: <%- model.item.shortFile %></p>
         <p><a href="#">Back</a></p>
@@ -110,6 +130,7 @@
         _.templateSettings.variable = 'model';
         var mainTemplate = _.template(document.getElementById('mainTemplate').textContent);
         var fileTemplate = _.template(document.getElementById('fileTemplate').textContent);
+        var treeTemplate = _.template(document.getElementById('treeTemplate').textContent);
 
         var tCoverage = { lcovData: null, currentItem: null, totals: null, longestPath: '', items: [] };
 
@@ -133,21 +154,25 @@
                 return;
             }
 
+            if (parts.tree) {
+                showTree();
+            }
+
             if (parts.file) {
                 showFile(parts.file);
             }
         }
 
-        function getColor(percentage){
+        function getColor(percentage) {
             //percentage from 0 to 100
-            var hue=((percentage/100)*120).toString(10);
-            return ["hsl(",hue,",50%,50%)"].join("");
+            var hue = ((percentage / 100) * 120).toString(10);
+            return ["hsl(", hue, ",50%,50%)"].join("");
         }
 
         function getCoverageClass(percentage) {
-            return percentage > 60 
-                ? percentage > 80 ? 'good' : '' 
-                : 'poor'; 
+            return percentage > 60
+                ? percentage > 80 ? 'good' : ''
+                : 'poor';
         }
 
         function getLineClass(lcovItem, lineNumber) {
@@ -155,6 +180,14 @@
             var func = _.find(lcovItem.functions.details, function (item) { return item.line === lineNumber; });
             var subject = line || func;
             return !subject ? 'notmeasured' : subject.hit === 0 ? 'nothit' : 'hit';
+        }
+
+        function showHome() {
+            if (!tCoverage.lcovData) { return; }
+
+            loadTemplate(mainTemplate, { totals: tCoverage.totals, listItems: tCoverage.items });
+            var table = document.querySelectorAll('table.sortable')[0];
+            sorttable.makeSortable(table);
         }
 
         function showFile(filePath) {
@@ -167,21 +200,16 @@
             loadTemplate(fileTemplate, { item: item, source: source });
         }
 
-        function showHome() {
+        function showTree() {
             if (!tCoverage.lcovData) { return; }
 
-            loadTemplate(mainTemplate, { totals: tCoverage.totals, listItems: tCoverage.items });
-            var table = document.querySelectorAll('table.sortable')[0];
-            sorttable.makeSortable(table);
+            var tree = buildTree(tCoverage.items);
+            loadTemplate(treeTemplate, { tree: tree });
         }
 
         function loadTemplate(template, data) {
             var main = document.getElementById('main');
             main.innerHTML = template(data);
-        }
-
-        function percentage(part, set) {
-            return ((part / set) * 100).toFixed(2);
         }
 
         function readCoverage() {
@@ -212,15 +240,13 @@
                         file: data[i].file,
                         lcov: data[i],
                         shortFile: data[i].file.replace(tCoverage.longestPath, ''),
-                        line: percentage(data[i].lines.hit, data[i].lines.found),
-                        branch: percentage(data[i].branches.hit, data[i].branches.found),
-                        function: percentage(data[i].functions.hit, data[i].functions.found)
+                        totals: {
+                            lines: { hit: data[i].lines.hit, found: data[i].lines.found, percentage: percentage(data[i].lines.hit, data[i].lines.found) },
+                            branches: { hit: data[i].branches.hit, found: data[i].branches.found, percentage: percentage(data[i].branches.hit, data[i].branches.found) },
+                            functions: { hit: data[i].functions.hit, found: data[i].functions.found, percentage: percentage(data[i].functions.hit, data[i].functions.found) }
+                        }
                     });
                 }
-
-                var paths = items.map(function (item) { return item.shortFile.replace(/\\/g, '/'); });
-                var tree = hierarchy(paths);
-                console.log(tree);
 
                 totals.lines.percentage = percentage(totals.lines.hit, totals.lines.found);
                 totals.branches.percentage = percentage(totals.branches.hit, totals.branches.found);
@@ -230,6 +256,66 @@
                 tCoverage.lcovData = data;
                 tCoverage.items = items;
             });
+        }
+
+
+        function buildTree(items, separator = '\\') {
+            var tree = {
+                name: '[root]',
+                path: '',
+                children: []
+            };
+
+            var parts = [],
+                node,
+                currentNode,
+                last = false;
+
+            _.each(items, function (item) {
+                currentNode = tree;
+
+                parts = item.shortFile.split(separator);
+                _.each(parts, function (part, index) {
+                    last = index === parts.length - 1;
+                    node = _.find(currentNode.children, function (child) { return child.name === part; });
+
+                    if (!node) {
+                        node = {
+                            name: part,
+                            path: (currentNode.path + part + (!last ? separator : ''))
+                        };
+
+                        if (!last) {
+                            node.children = [];
+                            node.totals = {
+                                lines: { hit: 0, found: 0 },
+                                branches: { hit: 0, found: 0 },
+                                functions: { hit: 0, found: 0 }
+                            };
+                        } else {
+                            node.item = item;
+                        }
+
+                        currentNode.children.push(node);
+                    }
+
+                    if (!last) {
+                        node.totals.lines.hit += item.lcov.lines.hit;
+                        node.totals.lines.found += item.lcov.lines.found;
+                        node.totals.lines.percentage = percentage(node.totals.lines.hit, node.totals.lines.found);
+                        node.totals.branches.hit += item.lcov.branches.hit;
+                        node.totals.branches.found += item.lcov.branches.found;
+                        node.totals.branches.percentage = percentage(node.totals.branches.hit, node.totals.branches.found);
+                        node.totals.functions.hit += item.lcov.functions.hit;
+                        node.totals.functions.found += item.lcov.functions.found;
+                        node.totals.functions.percentage = percentage(node.totals.functions.hit, node.totals.functions.found);
+                    }
+
+                    currentNode = node;
+                });
+            });
+
+            return tree;
         }
 
         window.addEventListener("hashchange", HashHandler, false);

@@ -22,21 +22,22 @@ function parseHashBangArgs(aURL) {
     for (var i = 0; i < hashes.length; i++) {
         var hash = hashes[i].split('=');
         if (hash[0] === '') { continue; }
-        vars[hash[0]] = hash.length > 1 ? decodeURI(hash[1]) : null;
+        vars[hash[0]] = hash.length > 1 ? decodeURI(hash[1]) : true;
     }
     return _.size(vars) > 0 ? vars : null;
 }
 
-function hierarchy(paths, seperator = '/') {
-    return paths.reduce(function (hier, path) {
-        var x = hier;
-        path.split(seperator).forEach(function (item) {
-            if (!x[item]) {
-                x[item] = { };
-            }
-            x = x[item];
-        });
-        x.path = path;
-        return hier;
-    }, { });
+function percentage(part, set) {
+    return ((part / set) * 100).toFixed(2);
+}
+
+/**
+ * Partials for underscore.js
+ * @param {string} which The id of the template (postfixed with '-partial')
+ * @param {any} data The data for the template
+ * @returns {string} HTML 
+ */
+function partial(which, data) {
+    var tmpl = document.getElementById(which + '-partial').textContent;
+    return _.template(tmpl)(data);
 }
