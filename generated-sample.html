@@ -28,7 +28,7 @@
 
         <%= partial('stats', model.totals) %>
         <h2>Files</h2>
-        <p><a href="#tree">View hierarchy</a></p>
+        <p><a href="#tree">Hierarchy view</a></p>
 
         <table class="sortable">
             <thead>
@@ -82,11 +82,13 @@
                 <% if (node.children) { %>
                 <input type="checkbox" id="<%- node.path %>" />
                 <label for="<%- node.path %>"><%- node.name %></label>
-                <span class="pull-right"><%= partial('stats', node.totals || node.item.totals) %></span>
+                <span class="pull-right small">
+                    <%= partial('stats', node.totals || node.item.totals) %>
+                </span>
                 <%= partial('tree-children', node.children) %>
                 <% } else { %>
                 <a href="#file=<%- encodeURI(node.item.file)  %>"><%- node.name %></a>
-                <span class="pull-right"><%= partial('stats', node.totals || node.item.totals) %></span>
+                <span class="pull-right small"><%= partial('stats', node.totals || node.item.totals) %></span>
                 <% } %>
             </li>
             <% }); %>
@@ -96,7 +98,7 @@
     <script id="treeTemplate" type="text/template">
         <h1>Coverage report hierarchy</h1>
 
-        <p><a href="#">Back</a></p>
+        <p><a href="#">Home</a></p>
         <div class="tree">
             <%= partial('tree-children', model.tree.children) %>
         </div>
@@ -109,7 +111,7 @@
         <%= partial('stats', model.item.totals) %>
 
         <p>File: <%- model.item.shortFile %></p>
-        <p><a href="#">Back</a></p>
+        <p><a href="#">Home</a> | <a href="#tree">Hierarchy View</a></p>
 
         <div class="code">
             <% _.each(model.source.split('\n'), function(line, index) { %>

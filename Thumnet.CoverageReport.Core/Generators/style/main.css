@@ -32,6 +32,7 @@ thead th {
 
 .tree ul {
     list-style-type: none;
+    padding-left: 20px;
 }
 
 .tree label {
@@ -48,10 +49,10 @@ thead th {
         opacity: 0;
         overflow: hidden;
         white-space: nowrap;
-        /*-webkit-transition: all 1s ease;
-        -moz-transition: all 1s ease;
-        -o-transition: all 1s ease;
-        transition: all 1s ease;*/
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -o-transition: all .2s ease;
+        transition: all .2s ease; 
     }
 
     .tree input[type=checkbox]:checked ~ ul {
@@ -61,29 +62,23 @@ thead th {
     }
 
     .tree input[type=checkbox] + label:before {
-        transform-origin: 25% 50%;
-        border: 8px solid transparent;
-        border-width: 8px 12px;
-        border-left-color: #333;
         margin-left: -20px;
-        width: 0;
-        height: 0;
         display: inline-block;
         text-align: center;
-        content: '';
-        color: #AAAFAB;
-        /*-webkit-transition: all .5s ease;
+        content: '\25b6';
+        color: #aaa;
+        -webkit-transition: all .5s ease;
         -moz-transition: all .5s ease;
         -o-transition: all .5s ease;
-        transition: all .5s ease;*/
+        transition: all .5s ease;
         position: absolute;
-        margin-top: 1px;
+    }
+    .tree input[type=checkbox] + label:hover:before {
+        color: #666;
     }
 
     .tree input[type=checkbox]:checked + label:before {
         transform: rotate(90deg);
-        /*margin-top: 6px;
-        margin-left: -25px;*/
     }
 
 
@@ -119,6 +114,10 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 .stats {
     border-radius: 3px;
     padding: .3em .6em;
+}
+
+.small .stats {
+    font-size: .8em;
 }
 
 .progress {
