@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Thumnet.CoverageReport.Core.Generators;
 using Thumnet.CoverageReport.Core.Parsers;
+using Thumnet.CoverageReport.Core.Replacers;
 
 namespace Thumnet.CoverageReport.ConsoleApp
 {
@@ -13,30 +14,32 @@ namespace Thumnet.CoverageReport.ConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            var lcovPath = @"./coverlet.lcov"; // @"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info";
-            var parser = new LcovParser(lcovPath);
+            // var lcovPath = @"./coverlet.lcov"; // @"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info";
+            // var parser = new LcovParser(lcovPath);
 
-            Func<string, string> compressMethod = LzString.CompressToBase64;//LzString.CompressToUtf16;
+            // Func<string, string> compressMethod = LzString.CompressToBase64;//LzString.CompressToUtf16;
             
-            var items = parser.ReadItems().ToList();
-            var sourceFiles = items
-                .Select(i => i.File)
-                .ToDictionary(k => k, v => compressMethod(File.ReadAllText(v)));
+            // var items = parser.ReadItems().ToList();
+            // var sourceFiles = items
+            //     .Select(i => i.File)
+            //     .ToDictionary(k => k, v => compressMethod(File.ReadAllText(v)));
 
-            //var source = File.ReadAllText(items[0].File);
-            //Console.WriteLine(source);
-            //var compressed = LzString.CompressToUtf16(source);
-            //Console.WriteLine();
-            //Console.WriteLine(compressed);
-            //var decompressed = LzString.DecompressFromUtf16(compressed);
+            // var lcovSource = compressMethod(string.Join(Environment.NewLine, parser.TextLines));
+            // var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
+            // var generated = inlineTemplate.TransformText();
+            
+            var rootPath = @"/Users/jeffreytummers/Sources/CoverageReport/";
+            var generated = File.ReadAllText(Path.Combine(rootPath, "generated-sample.html"));
 
-            //Console.ReadLine();
-            var lcovSource = compressMethod(string.Join(Environment.NewLine, parser.TextLines));
-            var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
-            var generated = inlineTemplate.TransformText();
-            File.WriteAllText(@".\generated.html", generated);
+            var inliner = new HtmlResourceInliner(new IReplacer[] { 
+                new JsSrcReplacer(rootPath),
+                new StyleLinkReplacer(rootPath)
+            });
+            var inlined = inliner.Replace(generated);
+            
+            File.WriteAllText(Path.Combine(rootPath, "generated.html"), inlined);
 
-            Console.WriteLine(items.Count);
+            // Console.WriteLine(items.Count);
 
         }
     }

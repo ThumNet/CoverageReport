@@ -1,22 +1,7 @@
-﻿/*
-  SortTable
-  version 2
-  7th April 2007
-  Stuart Langridge, http://www.kryogenix.org/code/browser/sorttable/
-
-  Instructions:
-  Download this file
-  Add <script src="sorttable.js"></script> to your HTML
-  Add class="sortable" to any table you'd like to make sortable
-  Click on the headers to sort
-
-  Thanks to many, many people for contributions and suggestions.
-  Licenced as X11: http://www.kryogenix.org/code/browser/licence.html
-  This basically means: do what you want with it.
-*/
-
-
-var stIsIE = /*@cc_on!@*/false;
+﻿// SortTable
+// version 2
+// 7th April 2007
+// Stuart Langridge, http://www.kryogenix.org/code/browser/sorttable/
 
 sorttable = {
   init: function() {
@@ -100,7 +85,7 @@ sorttable = {
             this.removeChild(document.getElementById('sorttable_sortfwdind'));
             sortrevind = document.createElement('span');
             sortrevind.id = "sorttable_sortrevind";
-            sortrevind.innerHTML = stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25B4;';
+            sortrevind.innerHTML = '&nbsp;&#x25B4;';
             this.appendChild(sortrevind);
             return;
           }
@@ -113,7 +98,7 @@ sorttable = {
             this.removeChild(document.getElementById('sorttable_sortrevind'));
             sortfwdind = document.createElement('span');
             sortfwdind.id = "sorttable_sortfwdind";
-            sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
+            sortfwdind.innerHTML = '&nbsp;&#x25BE;';
             this.appendChild(sortfwdind);
             return;
           }
@@ -134,7 +119,7 @@ sorttable = {
           this.className += ' sorttable_sorted';
           sortfwdind = document.createElement('span');
           sortfwdind.id = "sorttable_sortfwdind";
-          sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
+          sortfwdind.innerHTML = '&nbsp;&#x25BE;';
           this.appendChild(sortfwdind);
 
 	        // build an array to sort. This is a Schwartzian transform thing,
@@ -337,38 +322,7 @@ sorttable = {
    Supporting functions: bundled here to avoid depending on a library
    ****************************************************************** */
 
-// Dean Edwards/Matthias Miller/John Resig
-
-/* for Mozilla/Opera9 */
-if (document.addEventListener) {
-    document.addEventListener("DOMContentLoaded", sorttable.init, false);
-}
-
-/* for Internet Explorer */
-/*@cc_on @*/
-/*@if (@_win32)
-    document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
-    var script = document.getElementById("__ie_onload");
-    script.onreadystatechange = function() {
-        if (this.readyState == "complete") {
-            sorttable.init(); // call the onload handler
-        }
-    };
-/*@end @*/
-
-/* for Safari */
-if (/WebKit/i.test(navigator.userAgent)) { // sniff
-    var _timer = setInterval(function() {
-        if (/loaded|complete/.test(document.readyState)) {
-            sorttable.init(); // call the onload handler
-        }
-    }, 10);
-}
-
-/* for other browsers */
-window.onload = sorttable.init;
-
-// written by Dean Edwards, 2005
+   // written by Dean Edwards, 2005
 // with input from Tino Zijdel, Matthias Miller, Diego Perini
 
 // http://dean.edwards.name/weblog/2005/10/add-event/
