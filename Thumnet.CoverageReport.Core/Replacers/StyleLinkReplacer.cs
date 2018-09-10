@@ -1,22 +1,28 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 
-namespace Thumnet.CoverageReport.Core.Replacers {
+namespace Thumnet.CoverageReport.Core.Replacers
+{
     public class StyleLinkReplacer : IReplacer {
-        private readonly string _htmlPath;
-        public StyleLinkReplacer (string htmlPath) {
-            _htmlPath = htmlPath;
+        private readonly ResourceReader _resourceReader;
+        private const string EmbeddedSourcePath = "Thumnet.CoverageReport.Core";
+
+        public StyleLinkReplacer (ResourceReader resourceReader) {
+            _resourceReader = resourceReader;
         }
 
         public void ReplaceNodes (HtmlNode docNode) {
             var nodes = docNode.SelectNodes ("//link[@rel='stylesheet']/@href").ToList();
             foreach (var node in nodes) {
                 var path = node.Attributes["href"].Value;
-                var source = File.ReadAllText (Path.Combine (_htmlPath, path));
+                if (!path.StartsWith(EmbeddedSourcePath))
+                {
+                    continue;
+                }
+
+                var resourceName = path.Replace('/', '.');
+                var source = _resourceReader.ReadResource(resourceName);
                 var newNodeHtml = $"<style type=\"text/css\">/*href={path}*/{Environment.NewLine}{source}</style>";
                 var replacement = HtmlNode.CreateNode(newNodeHtml);
                 node.ParentNode.ReplaceChild(replacement, node);

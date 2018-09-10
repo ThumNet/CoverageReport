@@ -12,35 +12,60 @@ namespace Thumnet.CoverageReport.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var slnDir = GetParentDir(AppDomain.CurrentDomain.BaseDirectory, 5); // 5 -> slndir/projdir/bin/debug/netxx
 
-            // var lcovPath = @"./coverlet.lcov"; // @"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info";
-            // var parser = new LcovParser(lcovPath);
+            #if DEBUG
+            args = new[]
+            {
+                @"E:\Sources\GIT\DPS.Potjes\DEV\DPS.Potjes.Tests\coverage.info",
+                slnDir
+            };
+            #endif
 
-            // Func<string, string> compressMethod = LzString.CompressToBase64;//LzString.CompressToUtf16;
-            
-            // var items = parser.ReadItems().ToList();
-            // var sourceFiles = items
-            //     .Select(i => i.File)
-            //     .ToDictionary(k => k, v => compressMethod(File.ReadAllText(v)));
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Usage: dotnet Thumnet.CoverageReport.ConsoleApp.dll <inputFile> <outputDir>");
+                return;
+            }
 
-            // var lcovSource = compressMethod(string.Join(Environment.NewLine, parser.TextLines));
-            // var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
-            // var generated = inlineTemplate.TransformText();
-            
-            var rootPath = @"/Users/jeffreytummers/Sources/CoverageReport/";
-            var generated = File.ReadAllText(Path.Combine(rootPath, "generated-sample.html"));
+            var inputFile = args[0];
+            var outputDir = args[1];
 
-            var inliner = new HtmlResourceInliner(new IReplacer[] { 
-                new JsSrcReplacer(rootPath),
-                new StyleLinkReplacer(rootPath)
+            Console.WriteLine(args.Length);
+
+            var parser = new LcovParser(inputFile);
+            Func<string, string> compressMethod = LzString.CompressToBase64;
+
+            var items = parser.ReadItems().ToList();
+            var sourceFiles = items
+                .Select(i => i.File)
+                .ToDictionary(k => k, v => compressMethod(File.ReadAllText(v)));
+
+            var lcovSource = compressMethod(string.Join(Environment.NewLine, parser.TextLines));
+            var inlineTemplate = new HtmlInlineTemplate(lcovSource, sourceFiles);
+            var generated = inlineTemplate.TransformText();
+
+            var resourceReader = new ResourceReader(typeof(IReplacer).Assembly);
+            var inliner = new HtmlResourceInliner(new IReplacer[] {
+                new JsSrcReplacer(resourceReader),
+                new StyleLinkReplacer(resourceReader)
             });
             var inlined = inliner.Replace(generated);
-            
-            File.WriteAllText(Path.Combine(rootPath, "generated.html"), inlined);
 
-            // Console.WriteLine(items.Count);
+            var outputFile = Path.Combine(outputDir, "report.html");
+            Console.WriteLine($"Writing report to: {outputFile}");
+            File.WriteAllText(outputFile, inlined);
+        }
 
+        static string GetParentDir(string path, int up)
+        {
+            var parent = path;
+            for (int i = 0; i < up; i++)
+            {
+                parent = Path.GetDirectoryName(parent);
+            }
+
+            return parent;
         }
     }
 }

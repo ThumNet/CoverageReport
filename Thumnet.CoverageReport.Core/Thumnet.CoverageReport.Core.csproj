@@ -5,6 +5,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Generators\scripts\lcov-parse-min.js" />
+    <None Remove="Generators\scripts\lz-string-min.js" />
+    <None Remove="Generators\scripts\lz-string.js" />
+    <None Remove="Generators\scripts\sorttable-min.js" />
+    <None Remove="Generators\scripts\sorttable.js" />
+    <None Remove="Generators\scripts\tools.js" />
+    <None Remove="Generators\scripts\underscore-min.js" />
+    <None Remove="Generators\style\main.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Generators\scripts\lcov-parse-min.js" />
+    <EmbeddedResource Include="Generators\scripts\lz-string.js" />
+    <EmbeddedResource Include="Generators\scripts\lz-string-min.js" />
+    <EmbeddedResource Include="Generators\scripts\sorttable-min.js" />
+    <EmbeddedResource Include="Generators\scripts\sorttable.js" />
+    <EmbeddedResource Include="Generators\scripts\tools.js" />
+    <EmbeddedResource Include="Generators\scripts\underscore-min.js" />
+    <EmbeddedResource Include="Generators\style\main.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.8.7" />
     <PackageReference Include="System.CodeDom" Version="4.5.0" />
   </ItemGroup>

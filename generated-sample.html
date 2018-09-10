@@ -59,6 +59,31 @@
         </table>
     </script>
 
+    <script id="treeTemplate" type="text/template">
+        <h1>Coverage report hierarchy</h1>
+
+        <p><a href="#">Home</a></p>
+        <div class="tree">
+            <%= partial('tree-children', model.tree.children) %>
+        </div>
+    </script>
+
+    <script id="fileTemplate" type="text/template">
+        <h1>File report</h1>
+
+        <%= partial('stats', model.item.totals) %>
+
+        <p>File: <%- model.item.shortFile %></p>
+        <p><a href="#">Home</a> | <a href="#tree">Hierarchy View</a></p>
+
+        <div class="code">
+            <% _.each(model.source.split('\n'), function(line, index) { %>
+            <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
+            <% }); %>
+        </div>
+        <!--<pre><%- model.source %></pre>-->
+    </script>
+
     <script id="stats-partial" type="text/x-handlebars-template">
         <span class="stats" style="background-color:<%- getColor(model.lines.percentage) %>;"> <%- model.lines.hit %>/<%- model.lines.found %> Lines (<%- model.lines.percentage %>%)</span>
         <span class="stats" style="background-color:<%- getColor(model.branches.percentage) %>;"> <%- model.branches.hit %>/<%- model.branches.found %> Branches (<%- model.branches.percentage %>%)</span>
@@ -95,37 +120,13 @@
         </ul>
     </script>
 
-    <script id="treeTemplate" type="text/template">
-        <h1>Coverage report hierarchy</h1>
 
-        <p><a href="#">Home</a></p>
-        <div class="tree">
-            <%= partial('tree-children', model.tree.children) %>
-        </div>
-    </script>
-
-
-    <script id="fileTemplate" type="text/template">
-        <h1>File report</h1>
-
-        <%= partial('stats', model.item.totals) %>
-
-        <p>File: <%- model.item.shortFile %></p>
-        <p><a href="#">Home</a> | <a href="#tree">Hierarchy View</a></p>
-
-        <div class="code">
-            <% _.each(model.source.split('\n'), function(line, index) { %>
-            <p class="<%- getLineClass(model.item.lcov, index+1) %>"><%- line %></p>
-            <% }); %>
-        </div>
-        <!--<pre><%- model.source %></pre>-->
-    </script>
 
     <script src="Thumnet.CoverageReport.Core/Generators/scripts/tools.js"></script>
     <script src="Thumnet.CoverageReport.Core/Generators/scripts/underscore-min.js"></script>
     <script src="Thumnet.CoverageReport.Core/Generators/scripts/lcov-parse-min.js"></script>
     <script src="Thumnet.CoverageReport.Core/Generators/scripts/lz-string-min.js"></script>
-    <script src="Thumnet.CoverageReport.Core/Generators/scripts/sorttable.js"></script>
+    <script src="Thumnet.CoverageReport.Core/Generators/scripts/sorttable-min.js"></script>
     <script src="coverage-private.js"></script>
 
     <script>
@@ -261,7 +262,8 @@
         }
 
 
-        function buildTree(items, separator = '\\') {
+        function buildTree(items, separator) {
+            separator = separator || '\\';
             var tree = {
                 name: '[root]',
                 path: '',

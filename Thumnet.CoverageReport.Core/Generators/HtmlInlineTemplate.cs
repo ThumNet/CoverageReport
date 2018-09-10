@@ -32,47 +32,211 @@ namespace Thumnet.CoverageReport.Core.Generators
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
     <meta http-equiv=""X-UA-Compatible"" content=""ie=edge"">
     <title>Coverage Viewer</title>
+    <link rel=""stylesheet"" href=""Thumnet.CoverageReport.Core/Generators/style/main.css"" />
 </head>
 <body>
+
+    <div id=""main""></div>	
         
 	<script>
 		var coverageReport = {
 			'lcovSource': '");
             
-            #line 15 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 18 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(LcovSource));
             
             #line default
             #line hidden
             this.Write("\',\r\n\t\t\t");
             
-            #line 16 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 19 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
  foreach (var sourceFileName in SourceFiles.Keys) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\'");
             
-            #line 17 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 20 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(sourceFileName.Replace("\\", "\\\\")));
             
             #line default
             #line hidden
             this.Write("\': \'");
             
-            #line 17 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 20 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SourceFiles[sourceFileName]));
             
             #line default
             #line hidden
             this.Write("\',\r\n\t\t\t");
             
-            #line 18 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 21 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t};\r\n\t</script>\r\n\r\n</body>\r\n</html>");
+            this.Write("\t\t};\r\n\t</script>\r\n\r\n\t  <script id=\"mainTemplate\" type=\"text/template\">\r\n        <" +
+                    "h1>Coverage report</h1>\r\n\r\n        <%= partial(\'stats\', model.totals) %>\r\n      " +
+                    "  <h2>Files</h2>\r\n        <p><a href=\"#tree\">Hierarchy view</a></p>\r\n\r\n        <" +
+                    "table class=\"sortable\">\r\n            <thead>\r\n                <tr>\r\n            " +
+                    "        <th>File</th>\r\n                    <th class=\"sorttable_nosort divider-l" +
+                    "eft\">Lines</th>\r\n                    <th></th>\r\n                    <th class=\"s" +
+                    "orttable_numeric\"></th>\r\n                    <th class=\"sorttable_nosort divider" +
+                    "-left\">Branches</th>\r\n                    <th></th>\r\n                    <th cla" +
+                    "ss=\"sorttable_numeric\"></th>\r\n                    <th class=\"sorttable_nosort di" +
+                    "vider-left\">Functions</th>\r\n                    <th></th>\r\n                    <" +
+                    "th class=\"sorttable_numeric\"></th>\r\n                </tr>\r\n            </thead>\r" +
+                    "\n            <tbody>\r\n                <% _.each( model.listItems, function( item" +
+                    " ){ %>\r\n                <tr>\r\n                    <td><a href=\"#file=<%- encodeU" +
+                    "RI(item.file) %>\"><%- item.shortFile %></a></td>\r\n\r\n                    <%= part" +
+                    "ial(\'coverage-cells\', item.totals.lines) %>\r\n                    <%= partial(\'co" +
+                    "verage-cells\', item.totals.branches) %>\r\n                    <%= partial(\'covera" +
+                    "ge-cells\', item.totals.functions) %>\r\n                </tr>\r\n                <% " +
+                    "}); %>\r\n            </tbody>\r\n        </table>\r\n    </script>\r\n\r\n    <script id=" +
+                    "\"treeTemplate\" type=\"text/template\">\r\n        <h1>Coverage report hierarchy</h1>" +
+                    "\r\n\r\n        <p><a href=\"#\">Home</a></p>\r\n        <div class=\"tree\">\r\n           " +
+                    " <%= partial(\'tree-children\', model.tree.children) %>\r\n        </div>\r\n    </scr" +
+                    "ipt>\r\n\r\n    <script id=\"fileTemplate\" type=\"text/template\">\r\n        <h1>File re" +
+                    "port</h1>\r\n\r\n        <%= partial(\'stats\', model.item.totals) %>\r\n\r\n        <p>Fi" +
+                    "le: <%- model.item.shortFile %></p>\r\n        <p><a href=\"#\">Home</a> | <a href=\"" +
+                    "#tree\">Hierarchy View</a></p>\r\n\r\n        <div class=\"code\">\r\n            <% _.ea" +
+                    "ch(model.source.split(\'\\n\'), function(line, index) { %>\r\n            <p class=\"<" +
+                    "%- getLineClass(model.item.lcov, index+1) %>\"><%- line %></p>\r\n            <% })" +
+                    "; %>\r\n        </div>\r\n        <!--<pre><%- model.source %></pre>-->\r\n    </scrip" +
+                    "t>\r\n\r\n    <script id=\"stats-partial\" type=\"text/x-handlebars-template\">\r\n       " +
+                    " <span class=\"stats\" style=\"background-color:<%- getColor(model.lines.percentage" +
+                    ") %>;\"> <%- model.lines.hit %>/<%- model.lines.found %> Lines (<%- model.lines.p" +
+                    "ercentage %>%)</span>\r\n        <span class=\"stats\" style=\"background-color:<%- g" +
+                    "etColor(model.branches.percentage) %>;\"> <%- model.branches.hit %>/<%- model.bra" +
+                    "nches.found %> Branches (<%- model.branches.percentage %>%)</span>\r\n        <spa" +
+                    "n class=\"stats\" style=\"background-color:<%- getColor(model.functions.percentage)" +
+                    " %>;\"> <%- model.functions.hit %>/<%- model.functions.found %> Functions (<%- mo" +
+                    "del.functions.percentage %>%)</span>\r\n    </script>\r\n\r\n    <script id=\"coverage-" +
+                    "cells-partial\" type=\"text/x-handlebars-template\">\r\n        <td class=\"divider-le" +
+                    "ft\">\r\n            <div class=\"progress\">\r\n                <div class=\"bar\" style" +
+                    "=\"width:<%- model.percentage %>%;background-color:<%- getColor(model.percentage)" +
+                    " %>;\"></div>\r\n            </div>\r\n        </td>\r\n        <td><%- model.percentag" +
+                    "e %>%</td>\r\n        <td><%- model.hit %>/<%- model.found %></td>\r\n    </script>\r" +
+                    "\n\r\n    <script id=\"tree-children-partial\" type=\"text/x-handlebars-template\">\r\n  " +
+                    "      <ul>\r\n            <% _.each( model, function( node ){ %>\r\n            <li>" +
+                    "\r\n                <% if (node.children) { %>\r\n                <input type=\"check" +
+                    "box\" id=\"<%- node.path %>\" />\r\n                <label for=\"<%- node.path %>\"><%-" +
+                    " node.name %></label>\r\n                <span class=\"pull-right small\">\r\n        " +
+                    "            <%= partial(\'stats\', node.totals || node.item.totals) %>\r\n          " +
+                    "      </span>\r\n                <%= partial(\'tree-children\', node.children) %>\r\n " +
+                    "               <% } else { %>\r\n                <a href=\"#file=<%- encodeURI(node" +
+                    ".item.file)  %>\"><%- node.name %></a>\r\n                <span class=\"pull-right s" +
+                    "mall\"><%= partial(\'stats\', node.totals || node.item.totals) %></span>\r\n         " +
+                    "       <% } %>\r\n            </li>\r\n            <% }); %>\r\n        </ul>\r\n    </s" +
+                    "cript>\r\n\r\n\t<script src=\"Thumnet.CoverageReport.Core/Generators/scripts/tools.js\"" +
+                    "></script>\r\n    <script src=\"Thumnet.CoverageReport.Core/Generators/scripts/unde" +
+                    "rscore-min.js\"></script>\r\n    <script src=\"Thumnet.CoverageReport.Core/Generator" +
+                    "s/scripts/lcov-parse-min.js\"></script>\r\n    <script src=\"Thumnet.CoverageReport." +
+                    "Core/Generators/scripts/lz-string-min.js\"></script>\r\n    <script src=\"Thumnet.Co" +
+                    "verageReport.Core/Generators/scripts/sorttable-min.js\"></script>\r\n    <script sr" +
+                    "c=\"coverage-private.js\"></script>\r\n\r\n\t<script>\r\n        _.templateSettings.varia" +
+                    "ble = \'model\';\r\n        var mainTemplate = _.template(document.getElementById(\'m" +
+                    "ainTemplate\').textContent);\r\n        var fileTemplate = _.template(document.getE" +
+                    "lementById(\'fileTemplate\').textContent);\r\n        var treeTemplate = _.template(" +
+                    "document.getElementById(\'treeTemplate\').textContent);\r\n\r\n        var tCoverage =" +
+                    " { lcovData: null, currentItem: null, totals: null, longestPath: \'\', items: [] }" +
+                    ";\r\n\r\n        function HashHandler(e) {\r\n            handleRoute(e.newURL);\r\n    " +
+                    "    }\r\n\r\n        function LoadHandler() {\r\n            readCoverage();\r\n        " +
+                    "    setTimeout(checkHash, 200);\r\n        }\r\n\r\n        function checkHash() {\r\n  " +
+                    "          handleRoute(window.location.toString());\r\n        }\r\n\r\n        functio" +
+                    "n handleRoute(url) {\r\n            var parts = parseHashBangArgs(url);\r\n         " +
+                    "   if (!parts) {\r\n                showHome();\r\n                return;\r\n        " +
+                    "    }\r\n\r\n            if (parts.tree) {\r\n                showTree();\r\n           " +
+                    " }\r\n\r\n            if (parts.file) {\r\n                showFile(parts.file);\r\n    " +
+                    "        }\r\n        }\r\n\r\n        function getColor(percentage) {\r\n            //p" +
+                    "ercentage from 0 to 100\r\n            var hue = ((percentage / 100) * 120).toStri" +
+                    "ng(10);\r\n            return [\"hsl(\", hue, \",50%,50%)\"].join(\"\");\r\n        }\r\n\r\n " +
+                    "       function getCoverageClass(percentage) {\r\n            return percentage > " +
+                    "60\r\n                ? percentage > 80 ? \'good\' : \'\'\r\n                : \'poor\';\r\n" +
+                    "        }\r\n\r\n        function getLineClass(lcovItem, lineNumber) {\r\n            " +
+                    "var line = _.find(lcovItem.lines.details, function (item) { return item.line ===" +
+                    " lineNumber; });\r\n            var func = _.find(lcovItem.functions.details, func" +
+                    "tion (item) { return item.line === lineNumber; });\r\n            var subject = li" +
+                    "ne || func;\r\n            return !subject ? \'notmeasured\' : subject.hit === 0 ? \'" +
+                    "nothit\' : \'hit\';\r\n        }\r\n\r\n        function showHome() {\r\n            if (!t" +
+                    "Coverage.lcovData) { return; }\r\n\r\n            loadTemplate(mainTemplate, { total" +
+                    "s: tCoverage.totals, listItems: tCoverage.items });\r\n            var table = doc" +
+                    "ument.querySelectorAll(\'table.sortable\')[0];\r\n            sorttable.makeSortable" +
+                    "(table);\r\n        }\r\n\r\n        function showFile(filePath) {\r\n            if (!t" +
+                    "Coverage.lcovData) { return; }\r\n\r\n            var item = _.find(tCoverage.items," +
+                    " function (item) { return item.file === filePath; });\r\n            tCoverage.cur" +
+                    "rentItem = item;\r\n            var sourceCompressed = coverageReport[filePath];\r\n" +
+                    "            var source = LZString.decompressFromBase64(sourceCompressed);\r\n     " +
+                    "       loadTemplate(fileTemplate, { item: item, source: source });\r\n        }\r\n\r" +
+                    "\n        function showTree() {\r\n            if (!tCoverage.lcovData) { return; }" +
+                    "\r\n\r\n            var tree = buildTree(tCoverage.items);\r\n            loadTemplate" +
+                    "(treeTemplate, { tree: tree });\r\n        }\r\n\r\n        function loadTemplate(temp" +
+                    "late, data) {\r\n            var main = document.getElementById(\'main\');\r\n        " +
+                    "    main.innerHTML = template(data);\r\n        }\r\n\r\n        function readCoverage" +
+                    "() {\r\n            var lcovCompressed = coverageReport[\'lcovSource\'];\r\n          " +
+                    "  var lcovSrc = LZString.decompressFromBase64(lcovCompressed);\r\n\r\n            lc" +
+                    "ov_parse(lcovSrc.trim(), function (err, data) {\r\n                if (err) { cons" +
+                    "ole.error(err); return; }\r\n\r\n                tCoverage.longestPath = longest_com" +
+                    "mon_str(data.map(function (item) { return item.file; }), \'\\\\\');\r\n\r\n             " +
+                    "   var items = [],\r\n                    totals = {\r\n                        line" +
+                    "s: { hit: 0, found: 0 },\r\n                        branches: { hit: 0, found: 0 }" +
+                    ",\r\n                        functions: { hit: 0, found: 0 }\r\n                    " +
+                    "};\r\n\r\n                for (var i = 0; i < data.length; i++) {\r\n                 " +
+                    "   totals.lines.hit += data[i].lines.hit;\r\n                    totals.lines.foun" +
+                    "d += data[i].lines.found;\r\n                    totals.branches.hit += data[i].br" +
+                    "anches.hit;\r\n                    totals.branches.found += data[i].branches.found" +
+                    ";\r\n                    totals.functions.hit += data[i].functions.hit;\r\n         " +
+                    "           totals.functions.found += data[i].functions.found;\r\n\r\n               " +
+                    "     items.push({\r\n                        file: data[i].file,\r\n                " +
+                    "        lcov: data[i],\r\n                        shortFile: data[i].file.replace(" +
+                    "tCoverage.longestPath, \'\'),\r\n                        totals: {\r\n                " +
+                    "            lines: { hit: data[i].lines.hit, found: data[i].lines.found, percent" +
+                    "age: percentage(data[i].lines.hit, data[i].lines.found) },\r\n                    " +
+                    "        branches: { hit: data[i].branches.hit, found: data[i].branches.found, pe" +
+                    "rcentage: percentage(data[i].branches.hit, data[i].branches.found) },\r\n         " +
+                    "                   functions: { hit: data[i].functions.hit, found: data[i].funct" +
+                    "ions.found, percentage: percentage(data[i].functions.hit, data[i].functions.foun" +
+                    "d) }\r\n                        }\r\n                    });\r\n                }\r\n\r\n " +
+                    "               totals.lines.percentage = percentage(totals.lines.hit, totals.lin" +
+                    "es.found);\r\n                totals.branches.percentage = percentage(totals.branc" +
+                    "hes.hit, totals.branches.found);\r\n                totals.functions.percentage = " +
+                    "percentage(totals.functions.hit, totals.functions.found);\r\n\r\n                tCo" +
+                    "verage.totals = totals;\r\n                tCoverage.lcovData = data;\r\n           " +
+                    "     tCoverage.items = items;\r\n            });\r\n        }\r\n\r\n\r\n         function" +
+                    " buildTree(items, separator) {\r\n            separator = separator || \'\\\\\';\r\n    " +
+                    "        var tree = {\r\n                name: \'[root]\',\r\n                path: \'\'," +
+                    "\r\n                children: []\r\n            };\r\n\r\n            var parts = [],\r\n " +
+                    "               node,\r\n                currentNode,\r\n                last = false" +
+                    ";\r\n\r\n            _.each(items, function (item) {\r\n                currentNode = " +
+                    "tree;\r\n\r\n                parts = item.shortFile.split(separator);\r\n             " +
+                    "   _.each(parts, function (part, index) {\r\n                    last = index === " +
+                    "parts.length - 1;\r\n                    node = _.find(currentNode.children, funct" +
+                    "ion (child) { return child.name === part; });\r\n\r\n                    if (!node) " +
+                    "{\r\n                        node = {\r\n                            name: part,\r\n  " +
+                    "                          path: (currentNode.path + part + (!last ? separator : " +
+                    "\'\'))\r\n                        };\r\n\r\n                        if (!last) {\r\n      " +
+                    "                      node.children = [];\r\n                            node.tota" +
+                    "ls = {\r\n                                lines: { hit: 0, found: 0 },\r\n          " +
+                    "                      branches: { hit: 0, found: 0 },\r\n                         " +
+                    "       functions: { hit: 0, found: 0 }\r\n                            };\r\n        " +
+                    "                } else {\r\n                            node.item = item;\r\n       " +
+                    "                 }\r\n\r\n                        currentNode.children.push(node);\r\n" +
+                    "                    }\r\n\r\n                    if (!last) {\r\n                     " +
+                    "   node.totals.lines.hit += item.lcov.lines.hit;\r\n                        node.t" +
+                    "otals.lines.found += item.lcov.lines.found;\r\n                        node.totals" +
+                    ".lines.percentage = percentage(node.totals.lines.hit, node.totals.lines.found);\r" +
+                    "\n                        node.totals.branches.hit += item.lcov.branches.hit;\r\n  " +
+                    "                      node.totals.branches.found += item.lcov.branches.found;\r\n " +
+                    "                       node.totals.branches.percentage = percentage(node.totals." +
+                    "branches.hit, node.totals.branches.found);\r\n                        node.totals." +
+                    "functions.hit += item.lcov.functions.hit;\r\n                        node.totals.f" +
+                    "unctions.found += item.lcov.functions.found;\r\n                        node.total" +
+                    "s.functions.percentage = percentage(node.totals.functions.hit, node.totals.funct" +
+                    "ions.found);\r\n                    }\r\n\r\n                    currentNode = node;\r\n" +
+                    "                });\r\n            });\r\n\r\n            return tree;\r\n        }\r\n\r\n " +
+                    "       window.addEventListener(\"hashchange\", HashHandler, false);\r\n        windo" +
+                    "w.addEventListener(\"load\", LoadHandler, false);\r\n    </script>\r\n\r\n</body>\r\n</htm" +
+                    "l>");
             return this.GenerationEnvironment.ToString();
         }
     }
