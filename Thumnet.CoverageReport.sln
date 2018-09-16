@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB5ECD16-3C54-471D-9670-4B9C2A4EA465}"
 	ProjectSection(SolutionItems) = preProject
 		generated-sample.html = generated-sample.html
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coverlet.core", "coverlet\src\coverlet.core\coverlet.core.csproj", "{84E0BBBF-A040-41A5-8818-05948A4F96C4}"
@@ -18,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thumnet.CoverageReport.WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thumnet.CoverageReport.Data", "Thumnet.CoverageReport.Data\Thumnet.CoverageReport.Data.csproj", "{4F636F09-0B61-4D54-AD31-CFF65F9DF488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thumnet.CoverageReport.Test", "Thumnet.CoverageReport.Test\Thumnet.CoverageReport.Test.csproj", "{57E85DD1-437F-426D-82AC-A3ED3A45BAF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thumnet.CoverageReport.Test", "Thumnet.CoverageReport.Test\Thumnet.CoverageReport.Test.csproj", "{57E85DD1-437F-426D-82AC-A3ED3A45BAF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
