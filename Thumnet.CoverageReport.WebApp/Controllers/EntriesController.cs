@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using Thumnet.CoverageReport.Core.Entities;
-using Thumnet.CoverageReport.Data;
-using Thumnet.CoverageReport.WebApp.Models;
+using Thumnet.CoverageReport.Core.Interfaces;
+using Thumnet.CoverageReport.Core.Models;
 
 namespace Thumnet.CoverageReport.WebApp.Controllers
 {
@@ -11,38 +8,18 @@ namespace Thumnet.CoverageReport.WebApp.Controllers
     [ApiController]
     public class EntriesController : ControllerBase
     {
-        private readonly CoverageContext _coverageContext;
+        private readonly IReportRepository _reportRepository;
 
-        public EntriesController(CoverageContext coverageContext)
+        public EntriesController(IReportRepository reportRepository)
         {
-            _coverageContext = coverageContext;
+            _reportRepository = reportRepository;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] EntryPostViewModel model)
+        public void Post([FromBody] ReportInput report)
         {
-            var project = _coverageContext.Projects.FirstOrDefault(p => p.Name == model.ProjectName);
-            if (project == null)
-            {
-                project = new Project
-                {
-                    Name = model.ProjectName,
-                    Url = model.ProjectUrl
-                };
-                _coverageContext.Projects.Add(project);
-            }
-
-            var entry = new CoverageEntry
-            {
-                Created = DateTime.Now,
-                BranchName = model.BranchName,
-                LcovData = model.LcovData,
-                Project = project,
-                SourceFiles = model.SourceFilesData.Select(s => new SourceFileEntry { FilePath = s.Key, FileData = s.Value }).ToList()
-            };
-            _coverageContext.Entries.Add(entry);
-            _coverageContext.SaveChanges();
+            _reportRepository.AddCoverageReport(report);
         }
     }
 }

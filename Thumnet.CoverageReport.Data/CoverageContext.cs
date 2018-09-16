@@ -13,5 +13,7 @@ namespace Thumnet.CoverageReport.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<CoverageEntry> Entries { get; set; }
         public DbSet<SourceFileEntry> SourceFiles { get; set; }
+        public DbSet<FileData> FilesData { get; set; }
+
     }
 }

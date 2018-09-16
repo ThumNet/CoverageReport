@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Thumnet.CoverageReport.WebApp.Models
+namespace Thumnet.CoverageReport.Core.Models
 {
-    public class ReportLatestViewModel
+    public class ReportOutput
     {
         public DateTime Created { get; set; }
         public string ProjectName { get; set; }

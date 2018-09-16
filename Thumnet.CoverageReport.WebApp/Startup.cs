@@ -11,7 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSwag.AspNetCore;
+using Thumnet.CoverageReport.Core.Interfaces;
 using Thumnet.CoverageReport.Data;
+using Thumnet.CoverageReport.Data.Repositories;
 
 namespace Thumnet.CoverageReport.WebApp
 {
@@ -28,6 +30,8 @@ namespace Thumnet.CoverageReport.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CoverageContext>(options => options.UseSqlite("Data Source=Coverage.db"));
+
+            services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

@@ -38,14 +38,14 @@ namespace Thumnet.CoverageReport.ConsoleApp.Api
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PostAsync(EntryPostViewModel model)
+        public System.Threading.Tasks.Task PostAsync(ReportInput report)
         {
-            return PostAsync(model, System.Threading.CancellationToken.None);
+            return PostAsync(report, System.Threading.CancellationToken.None);
         }
 
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async System.Threading.Tasks.Task PostAsync(EntryPostViewModel model, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PostAsync(ReportInput report, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Entries");
@@ -55,7 +55,7 @@ namespace Thumnet.CoverageReport.ConsoleApp.Api
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(model, _settings.Value));
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(report, _settings.Value));
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
@@ -139,13 +139,13 @@ namespace Thumnet.CoverageReport.ConsoleApp.Api
 
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.73.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class EntryPostViewModel : System.ComponentModel.INotifyPropertyChanged
+    public partial class ReportInput : System.ComponentModel.INotifyPropertyChanged
     {
         private string _projectName;
         private string _projectUrl;
+        private string _branchName;
         private byte[] _lcovData;
         private System.Collections.Generic.Dictionary<string, byte[]> _sourceFilesData;
-        private string _branchName;
 
         [Newtonsoft.Json.JsonProperty("projectName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string ProjectName
@@ -175,6 +175,20 @@ namespace Thumnet.CoverageReport.ConsoleApp.Api
             }
         }
 
+        [Newtonsoft.Json.JsonProperty("branchName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string BranchName
+        {
+            get { return _branchName; }
+            set
+            {
+                if (_branchName != value)
+                {
+                    _branchName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         [Newtonsoft.Json.JsonProperty("lcovData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public byte[] LcovData
         {
@@ -198,20 +212,6 @@ namespace Thumnet.CoverageReport.ConsoleApp.Api
                 if (_sourceFilesData != value)
                 {
                     _sourceFilesData = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        [Newtonsoft.Json.JsonProperty("branchName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BranchName
-        {
-            get { return _branchName; }
-            set
-            {
-                if (_branchName != value)
-                {
-                    _branchName = value;
                     RaisePropertyChanged();
                 }
             }

@@ -1,40 +1,20 @@
-﻿using LZString;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Thumnet.CoverageReport.Data;
-using Thumnet.CoverageReport.WebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Thumnet.CoverageReport.Core.Interfaces;
 
 namespace Thumnet.CoverageReport.WebApp.Controllers
 {
     public class ReportsController : Controller
     {
-        private readonly CoverageContext _context;
+        private readonly IReportRepository _reportRepository;
 
-        public ReportsController(CoverageContext context)
+        public ReportsController(IReportRepository reportRepository)
         {
-            _context = context;
+            _reportRepository = reportRepository;
         }
 
         public IActionResult Latest(string id)
         {
-            var entry = _context.Entries
-                .Include(e => e.Project)
-                .Include(e => e.SourceFiles)
-                .Where(e => e.Project.Name == id)
-                .OrderByDescending(e => e.Created)
-                .FirstOrDefault();
-
-            var model = new ReportLatestViewModel
-            {
-                Created = entry.Created,
-                ProjectName = entry.Project.Name,
-                ProjectUrl = entry.Project.Url,
-                LcovSource = LzString.CompressToBase64(LzString.DecompressFromUint8Array(entry.LcovData)),
-                SourceFiles = entry.SourceFiles.ToDictionary(
-                    k => k.FilePath,
-                    v => LzString.CompressToBase64(LzString.DecompressFromUint8Array(v.FileData)))
-            };
+            var model = _reportRepository.GetLatest(id);
 
             return View(model);
         }

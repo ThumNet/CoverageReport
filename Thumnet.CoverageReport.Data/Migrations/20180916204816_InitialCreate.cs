@@ -8,6 +8,20 @@ namespace Thumnet.CoverageReport.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FilesData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Checksum = table.Column<string>(nullable: true),
+                    Bytes = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilesData", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -52,7 +66,7 @@ namespace Thumnet.CoverageReport.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CoverageEntryId = table.Column<int>(nullable: false),
                     FilePath = table.Column<string>(nullable: true),
-                    FileData = table.Column<byte[]>(nullable: true)
+                    DataId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,6 +75,12 @@ namespace Thumnet.CoverageReport.Data.Migrations
                         name: "FK_SourceFiles_Entries_CoverageEntryId",
                         column: x => x.CoverageEntryId,
                         principalTable: "Entries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SourceFiles_FilesData_DataId",
+                        column: x => x.DataId,
+                        principalTable: "FilesData",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -74,6 +94,11 @@ namespace Thumnet.CoverageReport.Data.Migrations
                 name: "IX_SourceFiles_CoverageEntryId",
                 table: "SourceFiles",
                 column: "CoverageEntryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SourceFiles_DataId",
+                table: "SourceFiles",
+                column: "DataId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -83,6 +108,9 @@ namespace Thumnet.CoverageReport.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Entries");
+
+            migrationBuilder.DropTable(
+                name: "FilesData");
 
             migrationBuilder.DropTable(
                 name: "Projects");

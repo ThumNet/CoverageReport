@@ -13,6 +13,6 @@ namespace Thumnet.CoverageReport.Core.Entities
         public string BuildId { get; set; }
 
         public byte[] LcovData { get; set; }
-        public List<SourceFileEntry> SourceFiles { get; set; }
+        public List<SourceFileEntry> SourceFiles { get; set; } = new List<SourceFileEntry>();
     }
 }

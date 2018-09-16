@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Thumnet.CoverageReport.WebApp.Models
+namespace Thumnet.CoverageReport.Core.Models
 {
-    public class EntryPostViewModel
+    public class ReportInput
     {
         public string ProjectName { get; set; }
         public string ProjectUrl { get; set; }

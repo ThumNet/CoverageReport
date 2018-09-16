@@ -117,7 +117,7 @@ namespace Thumnet.CoverageReport.ConsoleApp
             var projectUrl = "https://github.com/ThumNet/CoverageReport/";
 
             var client = new EntriesClient();
-            var model = new EntryPostViewModel
+            var model = new ReportInput
             {
                 ProjectName = projectName,
                 ProjectUrl = projectUrl,

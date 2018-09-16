@@ -9,9 +9,7 @@
 
         public string FilePath { get; set; }
 
-        public byte[] FileData { get; set; } // TODO: remove this and use the FileData class
-
-        public int FileDataId { get; set; }
+        public int DataId { get; set; }
         public FileData Data { get; set; }
     }
 }

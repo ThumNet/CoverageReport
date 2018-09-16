@@ -9,7 +9,7 @@ using Thumnet.CoverageReport.Data;
 namespace Thumnet.CoverageReport.Data.Migrations
 {
     [DbContext(typeof(CoverageContext))]
-    [Migration("20180916122322_InitialCreate")]
+    [Migration("20180916204816_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,20 @@ namespace Thumnet.CoverageReport.Data.Migrations
                     b.ToTable("Entries");
                 });
 
+            modelBuilder.Entity("Thumnet.CoverageReport.Core.Entities.FileData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("Bytes");
+
+                    b.Property<string>("Checksum");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FilesData");
+                });
+
             modelBuilder.Entity("Thumnet.CoverageReport.Core.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -61,13 +75,15 @@ namespace Thumnet.CoverageReport.Data.Migrations
 
                     b.Property<int>("CoverageEntryId");
 
-                    b.Property<byte[]>("FileData");
+                    b.Property<int>("DataId");
 
                     b.Property<string>("FilePath");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CoverageEntryId");
+
+                    b.HasIndex("DataId");
 
                     b.ToTable("SourceFiles");
                 });
@@ -85,6 +101,11 @@ namespace Thumnet.CoverageReport.Data.Migrations
                     b.HasOne("Thumnet.CoverageReport.Core.Entities.CoverageEntry", "CoverageEntry")
                         .WithMany("SourceFiles")
                         .HasForeignKey("CoverageEntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Thumnet.CoverageReport.Core.Entities.FileData", "Data")
+                        .WithMany()
+                        .HasForeignKey("DataId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
