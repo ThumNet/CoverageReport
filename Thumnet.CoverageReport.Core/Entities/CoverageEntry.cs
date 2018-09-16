@@ -9,7 +9,8 @@ namespace Thumnet.CoverageReport.Core.Entities
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public DateTime Created { get; set; }
-        public string Branchname { get; set; }
+        public string BranchName { get; set; }
+        public string BuildId { get; set; }
 
         public byte[] LcovData { get; set; }
         public List<SourceFileEntry> SourceFiles { get; set; }

@@ -42,10 +42,10 @@ namespace Thumnet.CoverageReport.ConsoleApp
             var outputDir = args[1];
 
             Console.WriteLine(args.Length);
-
-            var parser = new LcovParser(inputFile);
+            var lcovSource = File.ReadAllText(inputFile);
+            var parser = new LcovParser(lcovSource);
             var items = parser.ReadItems().ToList();
-            var inlineReport = GenerateInlineReport(string.Join(Environment.NewLine, parser.TextLines), items.Select(i => i.File));
+            var inlineReport = GenerateInlineReport(lcovSource, items.Select(i => i.File));
 
             var outputFile = Path.Combine(outputDir, "report.html");
             Console.WriteLine($"Writing report to: {outputFile}");

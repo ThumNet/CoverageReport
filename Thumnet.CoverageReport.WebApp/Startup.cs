@@ -42,7 +42,14 @@ namespace Thumnet.CoverageReport.WebApp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseStaticFiles();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Projects}/{action=Index}/{id?}");
+            });
 
             app.UseSwaggerUiWithApiExplorer(settings =>
             {

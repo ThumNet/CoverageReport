@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Thumnet.CoverageReport.Core.Models;
 
@@ -11,18 +11,20 @@ namespace Thumnet.CoverageReport.Core.Parsers
     /// </summary>
     public class LcovParser : ICoverageParser
     {
-        private readonly string _filepath;
-
-        public LcovParser(string filepath)
+        public LcovParser(string text)
         {
-            _filepath = filepath;
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            TextLines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
         }
 
         public string[] TextLines { get; private set; }
 
         public IEnumerable<CoverageItem> ReadItems()
         {
-            TextLines = File.ReadAllLines(_filepath);
             var assembly = new CoverageItem();
 
             foreach (var line in TextLines)

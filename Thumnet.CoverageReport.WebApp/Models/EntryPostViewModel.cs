@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thumnet.CoverageReport.WebApp.ViewModels
+namespace Thumnet.CoverageReport.WebApp.Models
 {
     public class EntryPostViewModel
     {

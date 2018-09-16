@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Thumnet.CoverageReport.Core.Entities;
 using Thumnet.CoverageReport.Data;
 using Thumnet.CoverageReport.WebApp.Controllers;
-using Thumnet.CoverageReport.WebApp.ViewModels;
+using Thumnet.CoverageReport.WebApp.Models;
 using Xunit;
 
-namespace Thumnet.CoverageReport.Test.Controllers
+namespace Thumnet.CoverageReport.Test.WebApp.Controllers
 {
     public class EntriesControllerTest
     {
@@ -51,7 +50,7 @@ namespace Thumnet.CoverageReport.Test.Controllers
 
             Assert.Equal(1, _context.Entries.Count());
             var entry = _context.Entries.First();
-            Assert.Equal(model.BranchName, entry.Branchname);
+            Assert.Equal(model.BranchName, entry.BranchName);
             Assert.Equal(model.LcovData, entry.LcovData);
             Assert.Equal(project.Id, entry.ProjectId);
 

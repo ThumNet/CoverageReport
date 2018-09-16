@@ -1,0 +1,194 @@
+﻿body {
+    background: #fafbfc;
+    line-height: 26px;
+    font-size: 14px;
+    color: #333;
+    word-wrap: break-word !important;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a, a:visited {
+    color: steelblue;
+}
+
+table {
+    border-spacing: 0;
+}
+
+thead th {
+    text-align: left;
+    border-bottom: 2px solid #999;
+    background-color: #efefef;
+    cursor: pointer;
+}
+
+    thead th.sorttable_nosort {
+        cursor: default;
+    }
+
+.tree li {
+    position: relative;
+}
+
+.tree ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.tree label {
+    cursor: pointer;
+}
+
+.tree input[type=checkbox] {
+    display: none;
+}
+
+    .tree input[type=checkbox] ~ ul {
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -o-transition: all .2s ease;
+        transition: all .2s ease; 
+    }
+
+    .tree input[type=checkbox]:checked ~ ul {
+        max-height: 100%;
+        max-width: 100%;
+        opacity: 1;
+    }
+
+    .tree input[type=checkbox] + label:before {
+        margin-left: -20px;
+        display: inline-block;
+        text-align: center;
+        content: '\25b6';
+        color: #aaa;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+        position: absolute;
+    }
+    .tree input[type=checkbox] + label:hover:before {
+        color: #666;
+    }
+
+    .tree input[type=checkbox]:checked + label:before {
+        transform: rotate(90deg);
+    }
+
+
+.pull-right {
+    position: absolute;
+    right: 0;
+}
+
+.divider-left {
+    border-left: 1px solid #999;
+}
+
+td.divider-left {
+    border-left-color: #efefef;
+}
+
+th, td {
+    padding: .2em .5em;
+}
+
+tbody td {
+    border-bottom: 1px solid #efefef;
+}
+
+tbody tr:hover {
+    background-color: #eee;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
+}
+
+.stats {
+    border-radius: 3px;
+    padding: .3em .6em;
+}
+
+.small .stats {
+    font-size: .8em;
+}
+
+.progress {
+    width: 60px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+    .progress .bar {
+        height: 14px;
+    }
+
+.code {
+    counter-reset: line;
+    font-family: monospace;
+}
+
+    .code p {
+        white-space: pre;
+        line-height: 1rem;
+        counter-increment: line;
+        margin: 0;
+        color: #333;
+    }
+
+        .code p.notmeasured {
+            color: #999;
+        }
+
+        .code p.hit {
+            background-color: rgba(131, 255, 131, 0.3);
+        }
+
+        .code p.nothit {
+            background-color: rgba(255, 131, 131, 0.3);
+        }
+
+        .code p:hover {
+            background-color: #efefef;
+            cursor: default;
+        }
+
+        .code p.hit:hover {
+            background-color: rgba(131, 255, 131, 0.5);
+        }
+
+        .code p.nothit:hover {
+            background-color: rgba(255, 131, 131, 0.5);
+        }
+
+        .code p::before {
+            content: counter(line) ".";
+            display: inline-block;
+            text-align: right;
+            width: 2em;
+            padding-right: .5em;
+            margin-right: .5em;
+            color: #aaa;
+            border-right: 2px solid #999;
+            background-color: #efefef;
+        }
+
+        .code p.hit::before {
+            border-right-color: green;
+        }
+
+        .code p.nothit::before {
+            border-right-color: red;
+        }
+
+        .code p:hover::before {
+            background-color: #ececec;
+            color: #333;
+        }
