@@ -15,7 +15,7 @@ namespace Thumnet.CoverageReport.Core.Generators
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+    #line 1 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "15.0.0.0")]
     public partial class HtmlInlineTemplate : HtmlInlineTemplateBase
     {
@@ -42,35 +42,35 @@ namespace Thumnet.CoverageReport.Core.Generators
 		var coverageReport = {
 			'lcovSource': '");
             
-            #line 18 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 18 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(LcovSource));
             
             #line default
             #line hidden
             this.Write("\',\r\n\t\t\t");
             
-            #line 19 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 19 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
  foreach (var sourceFileName in SourceFiles.Keys) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\'");
             
-            #line 20 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 20 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(sourceFileName.Replace("\\", "\\\\")));
             
             #line default
             #line hidden
             this.Write("\': \'");
             
-            #line 20 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 20 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SourceFiles[sourceFileName]));
             
             #line default
             #line hidden
             this.Write("\',\r\n\t\t\t");
             
-            #line 21 "E:\Sources\GIT\CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
+            #line 21 "C:\Users\Jeffrey.Tummers\Sources\Thumnet.CoverageReport\Thumnet.CoverageReport.Core\Generators\HtmlInlineTemplate.tt"
  } 
             
             #line default

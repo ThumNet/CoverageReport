@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /coverage-private.js
 /report.html
+/Thumnet.CoverageReport.WebApp/Coverage.db

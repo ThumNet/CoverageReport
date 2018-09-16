@@ -29,7 +29,7 @@ namespace Thumnet.CoverageReport.Core.Parsers
             {
                 var allparts = line.Split(':');
                 var identifier = allparts[0].ToUpper();
-                var value = allparts.Length > 1 ? string.Join(':', allparts.Skip(1)).Trim() : "";
+                var value = allparts.Length > 1 ? string.Join(":" , allparts.Skip(1)).Trim() : "";
                 var parts = value.Split(',');
 
                 switch (identifier)
@@ -63,12 +63,12 @@ namespace Thumnet.CoverageReport.Core.Parsers
                         assembly.Functions.Details.Add(new CoverageFunctionDetail
                         {
                             Line = int.Parse(parts[0]),
-                            Name = string.Join(',', parts.Skip(1))
+                            Name = string.Join(",", parts.Skip(1))
                         });
                         break;
                     case "FNDA":
                         assembly.Functions.Details
-                            .Single(d => d.Name == string.Join(',', parts.Skip(1)))
+                            .Single(d => d.Name == string.Join(",", parts.Skip(1)))
                             .Hit = int.Parse(parts[0]);
                         break;
                     case "BRDA":
